@@ -161,9 +161,7 @@ class RunFpOpCp2k(OP):
         if run_type == "ENERGY_FORCE":
             sys = dpdata.LabeledSystem(file_path, fmt="cp2kdata/e_f")
         elif run_type == "MD":
-            sys = dpdata.LabeledSystem(
-                str(workdir), cp2k_output_name="output.log", fmt="cp2kdata/md"
-            )
+            sys = dpdata.LabeledSystem(str(workdir), cp2k_output_name="output.log", fmt="cp2kdata/md")
         else:
             raise ValueError(f"Type of calculation {run_type} not supported")
 

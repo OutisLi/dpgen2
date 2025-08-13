@@ -83,9 +83,7 @@ class PrepDPTrain(OP):
             template = [template for ii in range(numb_models)]
         else:
             if not (len(template) == numb_models):
-                raise RuntimeError(
-                    f"length of the template list should be equal to {numb_models}"
-                )
+                raise RuntimeError(f"length of the template list should be equal to {numb_models}")
 
         for ii in range(numb_models):
             # mkdir
@@ -126,8 +124,6 @@ class PrepDPTrain(OP):
                 d["fitting_net"]["seed"] = random.randrange(sys.maxsize) % (2**32)
         else:
             self._set_desc_seed(jtmp["model"]["descriptor"])
-            jtmp["model"]["fitting_net"]["seed"] = random.randrange(sys.maxsize) % (
-                2**32
-            )
+            jtmp["model"]["fitting_net"]["seed"] = random.randrange(sys.maxsize) % (2**32)
         jtmp["training"]["seed"] = random.randrange(sys.maxsize) % (2**32)
         return jtmp

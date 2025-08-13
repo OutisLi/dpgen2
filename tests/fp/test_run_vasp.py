@@ -70,9 +70,7 @@ class TestRunVasp(unittest.TestCase):
             pass
 
         with mock.patch.object(dpgen2.fp.vasp.dpdata.LabeledSystem, "to", new=new_to):
-            with mock.patch.object(
-                dpgen2.fp.vasp.dpdata.LabeledSystem, "__init__", new=new_init
-            ):
+            with mock.patch.object(dpgen2.fp.vasp.dpdata.LabeledSystem, "__init__", new=new_init):
                 out = op.execute(
                     OPIO(
                         {
@@ -120,9 +118,7 @@ class TestRunVasp(unittest.TestCase):
             pass
 
         with mock.patch.object(dpgen2.fp.vasp.dpdata.LabeledSystem, "to", new=new_to):
-            with mock.patch.object(
-                dpgen2.fp.vasp.dpdata.LabeledSystem, "__init__", new=new_init
-            ):
+            with mock.patch.object(dpgen2.fp.vasp.dpdata.LabeledSystem, "__init__", new=new_init):
                 out = op.execute(
                     OPIO(
                         {

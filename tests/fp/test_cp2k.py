@@ -45,8 +45,7 @@ class TestFpOpCp2k(unittest.TestCase):
         fp_config = {
             "inputs": FpOpCp2kInputs(data_path / "input.inp"),
             "run": {
-                "command": "cp -r %s output.log && cat %s"
-                % (data_path / "output.log", data_path / "output.log"),
+                "command": "cp -r %s output.log && cat %s" % (data_path / "output.log", data_path / "output.log"),
             },
             "extra_output_files": [],
         }
@@ -80,8 +79,6 @@ class TestFpOpCp2k(unittest.TestCase):
         step = wf.query_step(key="iter-000000--run-fp-000000")[0]
         log = download_artifact(step.outputs.artifacts["log"], path="output")[0]
         self.assertTrue(os.path.isfile(log))
-        labeled_data = download_artifact(
-            step.outputs.artifacts["labeled_data"], path="output"
-        )[0]
+        labeled_data = download_artifact(step.outputs.artifacts["labeled_data"], path="output")[0]
         s = dpdata.LabeledSystem(labeled_data, fmt="deepmd/npy")
         self.assertEqual(len(s), 1)

@@ -25,11 +25,7 @@ class TestDeviManagerStd(unittest.TestCase):
         model_devi.add(DeviManager.MAX_DEVI_F, np.array([4, 5, 6]))
 
         self.assertEqual(model_devi.ntraj, 2)
-        self.assertTrue(
-            np.allclose(
-                model_devi.get(DeviManager.MAX_DEVI_F), np.array([[1, 2, 3], [4, 5, 6]])
-            )
-        )
+        self.assertTrue(np.allclose(model_devi.get(DeviManager.MAX_DEVI_F), np.array([[1, 2, 3], [4, 5, 6]])))
         self.assertEqual(model_devi.get(DeviManager.MAX_DEVI_V), [None, None])
 
         model_devi.clear()

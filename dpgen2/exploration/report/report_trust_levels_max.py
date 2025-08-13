@@ -103,9 +103,7 @@ class ExplorationReportTrustLevelsMax(ExplorationReportTrustLevels):
                 make_link,
             )
 
-            return make_link(
-                key, f"explore[lmp]/convergence[fixed-levels-max-select]/{key}"
-            )
+            return make_link(key, f"explore[lmp]/convergence[fixed-levels-max-select]/{key}")
 
         level_f_hi_link = make_class_doc_link("level_f_hi")
         level_v_hi_link = make_class_doc_link("level_v_hi")

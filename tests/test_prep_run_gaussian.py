@@ -68,9 +68,7 @@ class TestRunGaussian(unittest.TestCase):
                 "orig": np.zeros(3),
                 "nopbc": True,
             }
-        ).to_gaussian_gjf(
-            gaussian_input_name, keywords="force b3lyp/6-31g*", multiplicity=1
-        )
+        ).to_gaussian_gjf(gaussian_input_name, keywords="force b3lyp/6-31g*", multiplicity=1)
         run_gaussian = RunGaussian()
         output = "mock_output"
         out_name, log_name = run_gaussian.run_task(

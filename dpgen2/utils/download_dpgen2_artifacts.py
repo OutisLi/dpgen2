@@ -60,16 +60,8 @@ op_download_setting = {
     .add_output("models")
     .add_output("logs")
     .add_output("lcurves"),
-    "prep-run-explore": DownloadDefinition()
-    .add_output("logs")
-    .add_output("trajs")
-    .add_output("model_devis")
-    .add_output("extra_outputs"),
-    "prep-run-fp": DownloadDefinition()
-    .add_input("confs")
-    .add_output("logs")
-    .add_output("labeled_data")
-    .add_output("extra_outputs"),
+    "prep-run-explore": DownloadDefinition().add_output("logs").add_output("trajs").add_output("model_devis").add_output("extra_outputs"),
+    "prep-run-fp": DownloadDefinition().add_input("confs").add_output("logs").add_output("labeled_data").add_output("extra_outputs"),
     "collect-data": DownloadDefinition().add_output("iter_data"),
 }
 
@@ -127,14 +119,8 @@ def download_dpgen2_artifacts(
     input_def = dsetting.input_def
     output_def = dsetting.output_def
 
-    dld_input = not (
-        len(input_def) == 0
-        or (chk_pnt and (mypath / subkey / "inputs" / "done").is_file())
-    )
-    dld_output = not (
-        len(output_def) == 0
-        or (chk_pnt and (mypath / subkey / "outputs" / "done").is_file())
-    )
+    dld_input = not (len(input_def) == 0 or (chk_pnt and (mypath / subkey / "inputs" / "done").is_file()))
+    dld_output = not (len(output_def) == 0 or (chk_pnt and (mypath / subkey / "outputs" / "done").is_file()))
 
     step = None
     if dld_input or dld_output:
@@ -224,9 +210,7 @@ def _dload_input_lower(
             )
         except (NotImplementedError, FileNotFoundError):
             # NotImplementedError to be compatible with old versions of dflow
-            logging.warning(
-                f"cannot download input artifact  {kk}  of  {key}, it may be empty"
-            )
+            logging.warning(f"cannot download input artifact  {kk}  of  {key}, it may be empty")
 
 
 def _dload_output_lower(
@@ -249,9 +233,7 @@ def _dload_output_lower(
             )
         except (NotImplementedError, FileNotFoundError):
             # NotImplementedError to be compatible with old versions of dflow
-            logging.warning(
-                f"cannot download input artifact  {kk}  of  {key}, it may be empty"
-            )
+            logging.warning(f"cannot download input artifact  {kk}  of  {key}, it may be empty")
 
 
 def _get_all_step_defs(op_download_setting=op_download_setting):
@@ -329,19 +311,13 @@ def _filter_def_by_availability(
         splitted = dd.split(global_step_def_split)
         if len(splitted) != 3:
             raise RuntimeError(
-                "the step definition should be in format "
-                "stepkey/input_or_output/item_name.\n"
-                "for example prep-run-dp-train/output/logs"
+                "the step definition should be in format stepkey/input_or_output/item_name.\nfor example prep-run-dp-train/output/logs"
             )
         [subkey, io, name] = splitted
         if io in ["input"]:
-            avail = (subkey in op_download_setting.keys()) and (
-                name in op_download_setting[subkey].input_def.keys()
-            )
+            avail = (subkey in op_download_setting.keys()) and (name in op_download_setting[subkey].input_def.keys())
         elif io in ["output"]:
-            avail = (subkey in op_download_setting.keys()) and (
-                name in op_download_setting[subkey].output_def.keys()
-            )
+            avail = (subkey in op_download_setting.keys()) and (name in op_download_setting[subkey].output_def.keys())
         else:
             raise RuntimeError(f"unknown io style {io}")
         if not avail:

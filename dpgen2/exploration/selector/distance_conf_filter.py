@@ -128,9 +128,7 @@ def check_multiples(a, b, c, multiple):
         for j in range(len(values)):
             if i != j:
                 if values[i] > multiple * values[j]:
-                    logging.warning(
-                        f"Value {values[i]} is {multiple} times greater than {values[j]}"
-                    )
+                    logging.warning(f"Value {values[i]} is {multiple} times greater than {values[j]}")
                     return True
     return False
 
@@ -161,10 +159,7 @@ class DistanceConfFilter(ConfFilter):
         atom_names = list(safe_dist)
         structure = Atoms(
             positions=frame["coords"][0],
-            numbers=[
-                atom_names.index(frame["atom_names"][t]) + 1
-                for t in frame["atom_types"]
-            ],
+            numbers=[atom_names.index(frame["atom_names"][t]) + 1 for t in frame["atom_types"]],
             cell=frame["cells"][0],
             pbc=(not frame.nopbc),
         )
@@ -216,9 +211,7 @@ class DistanceConfFilter(ConfFilter):
                 dr = safe_dist[type_i] + safe_dist[type_j]
 
                 if dist < dr:
-                    logging.warning(
-                        f"Dangerous close for {type_i} - {type_j}, {dist:.5f} less than {dr:.5f}"
-                    )
+                    logging.warning(f"Dangerous close for {type_i} - {type_j}, {dist:.5f} less than {dr:.5f}")
                     return False
 
         return True
@@ -290,10 +283,7 @@ class BoxSkewnessConfFilter(ConfFilter):
         atom_names = list(safe_dist_dict)
         structure = Atoms(
             positions=frame["coords"][0],
-            numbers=[
-                atom_names.index(frame["atom_names"][t]) + 1
-                for t in frame["atom_types"]
-            ],
+            numbers=[atom_names.index(frame["atom_names"][t]) + 1 for t in frame["atom_types"]],
             cell=frame["cells"][0],
             pbc=(not frame.nopbc),
         )
@@ -368,10 +358,7 @@ class BoxLengthFilter(ConfFilter):
         atom_names = list(safe_dist_dict)
         structure = Atoms(
             positions=frame["coords"][0],
-            numbers=[
-                atom_names.index(frame["atom_names"][t]) + 1
-                for t in frame["atom_types"]
-            ],
+            numbers=[atom_names.index(frame["atom_names"][t]) + 1 for t in frame["atom_types"]],
             cell=frame["cells"][0],
             pbc=(not frame.nopbc),
         )
@@ -411,7 +398,9 @@ class BoxLengthFilter(ConfFilter):
             "The maximum number of processes used to filter configurations, "
             + "None represents as many as the processors of the machine, and 1 for serial"
         )
-        doc_length_ratio = "The threshold for the length ratio between the edges of the cell. If all length ratios are smaller than this value the check is passed"
+        doc_length_ratio = (
+            "The threshold for the length ratio between the edges of the cell. If all length ratios are smaller than this value the check is passed"
+        )
         return [
             Argument(
                 "max_workers",

@@ -51,9 +51,7 @@ def convert_pt_to_cif(input_file, output_dir):
         atom_type = atom_types_list[now_atom : now_atom + atom_num]
         frac_coord = frac_coors_list[now_atom : now_atom + atom_num]
         lattice = Lattice.from_parameters(*(length.tolist() + angle.tolist()))
-        structure = Structure(
-            lattice, atom_type, frac_coord, coords_are_cartesian=False
-        )
+        structure = Structure(lattice, atom_type, frac_coord, coords_are_cartesian=False)
 
         filename = "%s.cif" % i
         file_path = os.path.join(output_dir, filename)

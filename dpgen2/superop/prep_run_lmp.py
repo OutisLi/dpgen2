@@ -96,9 +96,7 @@ class PrepRunLmp(Steps):
         ii = "prep-lmp"
         self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii])
         ii = "run-lmp"
-        self.step_keys[ii] = "--".join(
-            ["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"]
-        )
+        self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"])
 
         self = _prep_run_lmp(
             self,
@@ -205,22 +203,12 @@ def _prep_run_lmp(
     )
     prep_run_steps.add(run_lmp)
 
-    prep_run_steps.outputs.parameters[
-        "task_names"
-    ].value_from_parameter = prep_lmp.outputs.parameters["task_names"]
+    prep_run_steps.outputs.parameters["task_names"].value_from_parameter = prep_lmp.outputs.parameters["task_names"]
     prep_run_steps.outputs.artifacts["logs"]._from = run_lmp.outputs.artifacts["log"]
     prep_run_steps.outputs.artifacts["trajs"]._from = run_lmp.outputs.artifacts["traj"]
-    prep_run_steps.outputs.artifacts["model_devis"]._from = run_lmp.outputs.artifacts[
-        "model_devi"
-    ]
-    prep_run_steps.outputs.artifacts["plm_output"]._from = run_lmp.outputs.artifacts[
-        "plm_output"
-    ]
-    prep_run_steps.outputs.artifacts[
-        "optional_outputs"
-    ]._from = run_lmp.outputs.artifacts["optional_output"]
-    prep_run_steps.outputs.artifacts["extra_outputs"]._from = run_lmp.outputs.artifacts[
-        "extra_outputs"
-    ]
+    prep_run_steps.outputs.artifacts["model_devis"]._from = run_lmp.outputs.artifacts["model_devi"]
+    prep_run_steps.outputs.artifacts["plm_output"]._from = run_lmp.outputs.artifacts["plm_output"]
+    prep_run_steps.outputs.artifacts["optional_outputs"]._from = run_lmp.outputs.artifacts["optional_output"]
+    prep_run_steps.outputs.artifacts["extra_outputs"]._from = run_lmp.outputs.artifacts["extra_outputs"]
 
     return prep_run_steps

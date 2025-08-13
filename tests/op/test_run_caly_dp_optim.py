@@ -81,26 +81,19 @@ class TestRunDPOptim(unittest.TestCase):
         optim_results_dir = out["optim_results_dir"]
         list_optim_results_dir = list(optim_results_dir.iterdir())
         counts_optim_results_dir = len(list_optim_results_dir)
-        counts_outcar_in_optim_results_dir = len(
-            list(optim_results_dir.rglob("OUTCAR_*"))
-        )
+        counts_outcar_in_optim_results_dir = len(list(optim_results_dir.rglob("OUTCAR_*")))
 
         self.assertTrue(optim_results_dir, Path(self.task_name) / "optim_results_dir")
         self.assertEqual(counts_optim_results_dir, 30)
         self.assertEqual(counts_outcar_in_optim_results_dir, 10)
-        self.assertTrue(
-            Path(self.task_name) / "optim_results_dir" / "CONTCAR_4"
-            in list_optim_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "optim_results_dir" / "CONTCAR_4" in list_optim_results_dir)
 
         traj_results_dir = out["traj_results"]
         list_traj_results_dir = list(traj_results_dir.glob("*.traj"))
         counts_traj = len(list_traj_results_dir)
         self.assertEqual(traj_results_dir, Path(self.task_name) / "traj_results")
         self.assertEqual(counts_traj, 10)
-        self.assertTrue(
-            Path(self.task_name) / "traj_results" / "0.3.traj" in list_traj_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "traj_results" / "0.3.traj" in list_traj_results_dir)
 
     @patch("dpgen2.op.run_caly_dp_optim.run_command")
     def test_01_error(self, mocked_run):
@@ -146,24 +139,16 @@ class TestRunDPOptim(unittest.TestCase):
         optim_results_dir = out["optim_results_dir"]
         list_optim_results_dir = list(optim_results_dir.iterdir())
         counts_optim_results_dir = len(list_optim_results_dir)
-        counts_outcar_in_optim_results_dir = len(
-            list(optim_results_dir.rglob("OUTCAR_*"))
-        )
+        counts_outcar_in_optim_results_dir = len(list(optim_results_dir.rglob("OUTCAR_*")))
 
         self.assertTrue(optim_results_dir, Path(self.task_name) / "optim_results_dir")
         self.assertEqual(counts_optim_results_dir, 0)
         self.assertEqual(counts_outcar_in_optim_results_dir, 0)
-        self.assertTrue(
-            Path(self.task_name) / "optim_results_dir" / "CONTCAR_4"
-            not in list_optim_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "optim_results_dir" / "CONTCAR_4" not in list_optim_results_dir)
 
         traj_results_dir = out["traj_results"]
         list_traj_results_dir = list(traj_results_dir.glob("*.traj"))
         counts_traj = len(list_traj_results_dir)
         self.assertEqual(traj_results_dir, Path(self.task_name) / "traj_results")
         self.assertEqual(counts_traj, 0)
-        self.assertTrue(
-            Path(self.task_name) / "traj_results" / "0.3.traj"
-            not in list_traj_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "traj_results" / "0.3.traj" not in list_traj_results_dir)

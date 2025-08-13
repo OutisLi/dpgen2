@@ -148,14 +148,9 @@ class TestMockedCollRunCaly(unittest.TestCase):
 
         self.assertTrue(out["task_name"] == self.task_name)
         self.assertTrue(out["finished"] == "false")
-        self.assertTrue(
-            Path("task_name/poscar_dir").joinpath("POSCAR_1")
-            in list(out["poscar_dir"].glob("POSCAR_*"))
-        )
+        self.assertTrue(Path("task_name/poscar_dir").joinpath("POSCAR_1") in list(out["poscar_dir"].glob("POSCAR_*")))
         self.assertTrue(len(list(out["poscar_dir"].rglob("POSCAR_*"))) == 5)
-        self.assertTrue(
-            out["input_file"] == Path(self.task_name).joinpath(self.input_file.name)
-        )
+        self.assertTrue(out["input_file"] == Path(self.task_name).joinpath(self.input_file.name))
         self.assertTrue(out["input_file"].read_text() == str(5))
         self.assertTrue(out["step"] == Path(self.task_name).joinpath("step"))
         self.assertTrue(out["step"].read_text() == str(2))
@@ -200,26 +195,19 @@ class TestMockedRunDPOptim(unittest.TestCase):
         optim_results_dir = out["optim_results_dir"]
         list_optim_results_dir = list(optim_results_dir.iterdir())
         counts_optim_results_dir = len(list_optim_results_dir)
-        counts_outcar_in_optim_results_dir = len(
-            list(optim_results_dir.rglob("OUTCAR_*"))
-        )
+        counts_outcar_in_optim_results_dir = len(list(optim_results_dir.rglob("OUTCAR_*")))
 
         self.assertTrue(optim_results_dir, Path(self.task_name) / "optim_results_dir")
         self.assertEqual(counts_optim_results_dir, 15)
         self.assertEqual(counts_outcar_in_optim_results_dir, 5)
-        self.assertTrue(
-            Path(self.task_name) / "optim_results_dir" / "CONTCAR_4"
-            in list_optim_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "optim_results_dir" / "CONTCAR_4" in list_optim_results_dir)
 
         traj_results_dir = out["traj_results"]
         list_traj_results_dir = list(traj_results_dir.glob("*.traj"))
         counts_traj = len(list_traj_results_dir)
         self.assertEqual(traj_results_dir, Path(self.task_name) / "traj_results")
         self.assertEqual(counts_traj, 5)
-        self.assertTrue(
-            Path(self.task_name) / "traj_results" / "3.traj", list_traj_results_dir
-        )
+        self.assertTrue(Path(self.task_name) / "traj_results" / "3.traj", list_traj_results_dir)
 
 
 # @unittest.skip("temporary pass")
@@ -258,16 +246,12 @@ class TestCalyEvoStepMerge(unittest.TestCase):
         caly_run_opt_file = self.work_dir.joinpath("caly_run_opt.py")
         caly_run_opt_file.write_text("caly_run_opt")
         self.caly_run_opt_file = upload_artifact(caly_run_opt_file)
-        self.caly_run_opt_files = upload_artifact(
-            [caly_run_opt_file, caly_run_opt_file]
-        )
+        self.caly_run_opt_files = upload_artifact([caly_run_opt_file, caly_run_opt_file])
 
         caly_check_opt_file = self.work_dir.joinpath("caly_check_opt.py")
         caly_check_opt_file.write_text("caly_check_opt")
         self.caly_check_opt_file = upload_artifact(caly_check_opt_file)
-        self.caly_check_opt_files = upload_artifact(
-            [caly_check_opt_file, caly_check_opt_file]
-        )
+        self.caly_check_opt_files = upload_artifact([caly_check_opt_file, caly_check_opt_file])
 
     def tearDown(self):
         shutil.rmtree(self.work_dir, ignore_errors=True)
@@ -344,7 +328,5 @@ class TestCalyEvoStepMerge(unittest.TestCase):
             os.chdir(Path(name))
             traj_list = list(Path().rglob("*.traj"))
             self.assertEqual(len(traj_list), 5 * self.max_step)
-            self.assertTrue(
-                Path("opt_path_0/traj_results").joinpath(f"{idx}.0.traj") in traj_list
-            )
+            self.assertTrue(Path("opt_path_0/traj_results").joinpath(f"{idx}.0.traj") in traj_list)
             os.chdir(cwd)

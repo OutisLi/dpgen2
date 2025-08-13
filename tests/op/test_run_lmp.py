@@ -98,9 +98,7 @@ class TestRunLmp(unittest.TestCase):
         self.assertEqual((work_dir / lmp_conf_name).read_text(), "foo")
         self.assertEqual((work_dir / lmp_input_name).read_text(), "bar")
         for ii in range(4):
-            self.assertEqual(
-                (work_dir / (model_name_pattern % ii)).read_text(), f"model{ii}"
-            )
+            self.assertEqual((work_dir / (model_name_pattern % ii)).read_text(), f"model{ii}")
 
     @patch("dpgen2.op.run_lmp.run_command")
     def test_error(self, mocked_run):
@@ -239,14 +237,10 @@ run             3000 upto
 
         # check if the teacher model is linked to model.000.pb
         ii = 0
-        self.assertEqual(
-            (work_dir / (model_name_pattern % ii)).read_text(), f"teacher model"
-        )
+        self.assertEqual((work_dir / (model_name_pattern % ii)).read_text(), f"teacher model")
 
         ii = 1
-        self.assertEqual(
-            (work_dir / (model_name_pattern % ii)).read_text(), f"model{ii - 1}"
-        )
+        self.assertEqual((work_dir / (model_name_pattern % ii)).read_text(), f"model{ii - 1}")
 
         # The number of models have to be 2 in knowledge distillation
         self.assertEqual(len(list((work_dir.glob("*.pb")))), 2)
@@ -294,9 +288,7 @@ class TestSetModels(unittest.TestCase):
 class TestGetEleTemp(unittest.TestCase):
     def test_get_ele_temp_none(self):
         with open("log", "w") as f:
-            f.write(
-                "pair_style      deepmd model.000.pb model.001.pb model.002.pb model.003.pb model.004.pb out_freq 10 out_file model_devi.out"
-            )
+            f.write("pair_style      deepmd model.000.pb model.001.pb model.002.pb model.003.pb model.004.pb out_freq 10 out_file model_devi.out")
         ele_temp = get_ele_temp("log")
         self.assertIsNone(ele_temp)
 

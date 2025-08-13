@@ -42,8 +42,7 @@ class BinaryFileInput:
     def save_as_file(self, path: Union[str, Path]) -> None:
         if self.ext and os.path.splitext(path)[-1] != self.ext:
             warnings.warn(
-                f'warning: file extension mismatch! Extension of input file is "{self.ext}",'
-                + f'current extension is "{str(path).split(".")[-1]}"'
+                f'warning: file extension mismatch! Extension of input file is "{self.ext}",' + f'current extension is "{str(path).split(".")[-1]}"'
             )
 
         with open(path, "wb") as file:

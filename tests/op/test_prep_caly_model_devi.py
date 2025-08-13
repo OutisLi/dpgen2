@@ -53,9 +53,7 @@ class TestPrepCalyModelDevi(unittest.TestCase):
             dir_name.mkdir(parents=True, exist_ok=True)
             self.ref_traj_results.append(dir_name)
             for traj_index in range(ntrajs_per_dir):
-                dir_name.joinpath(f"{dir_index}.{traj_index}.traj").write_text(
-                    f"trajectory.{dir_index}.{traj_index}"
-                )
+                dir_name.joinpath(f"{dir_index}.{traj_index}.traj").write_text(f"trajectory.{dir_index}.{traj_index}")
 
         self.group_size = 5
         self.ngroup = ntrajs_dir * ntrajs_per_dir / self.group_size

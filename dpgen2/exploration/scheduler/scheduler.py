@@ -138,9 +138,7 @@ class ExplorationScheduler:
         """
 
         try:
-            stg_complete, expl_task_grp, conf_selector = self.stage_schedulers[
-                self.cur_stage
-            ].plan_next_iteration(
+            stg_complete, expl_task_grp, conf_selector = self.stage_schedulers[self.cur_stage].plan_next_iteration(
                 report,
                 trajs,
             )
@@ -221,11 +219,7 @@ class ExplorationScheduler:
     def _print_prev_summary(self, prev_stg_idx):
         if prev_stg_idx >= 0:
             yes = "YES" if self.stage_schedulers[prev_stg_idx].converged() else "NO "
-            rmx = (
-                "YES"
-                if self.stage_schedulers[prev_stg_idx].reached_max_iteration()
-                else "NO "
-            )
+            rmx = "YES" if self.stage_schedulers[prev_stg_idx].reached_max_iteration() else "NO "
             return f"# Stage {prev_stg_idx:4d}  converged {yes}  reached max numb iterations {rmx}"
         else:
             return None
@@ -242,14 +236,8 @@ class ExplorationScheduler:
 
         ret = []
         if print_header:
-            ret.append(
-                stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print_header()
-            )
-        ret.append(
-            stages[stage_idx[iidx]]
-            .reports[idx_in_stage[iidx]]
-            .print(stage_idx[iidx], idx_in_stage[iidx], iidx)
-        )
+            ret.append(stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print_header())
+        ret.append(stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print(stage_idx[iidx], idx_in_stage[iidx], iidx))
 
         if self.complete():
             ret.append(f"# All stages converged")
@@ -267,9 +255,7 @@ class ExplorationScheduler:
         prev_stg_idx = -1
         for iidx in range(np.size(iter_idx)):
             if len(ret) == 0:
-                ret.append(
-                    stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print_header()
-                )
+                ret.append(stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print_header())
             if stage_idx[iidx] != prev_stg_idx:
                 if prev_stg_idx >= 0:
                     _summary = self._print_prev_summary(prev_stg_idx)
@@ -277,11 +263,7 @@ class ExplorationScheduler:
                     ret.append(_summary)
                 ret.append(f"# Stage {stage_idx[iidx]:4d}  " + "-" * 20)
                 prev_stg_idx = stage_idx[iidx]
-            ret.append(
-                stages[stage_idx[iidx]]
-                .reports[idx_in_stage[iidx]]
-                .print(stage_idx[iidx], idx_in_stage[iidx], iidx)
-            )
+            ret.append(stages[stage_idx[iidx]].reports[idx_in_stage[iidx]].print(stage_idx[iidx], idx_in_stage[iidx], iidx))
 
         if self.complete():
             if prev_stg_idx >= 0:

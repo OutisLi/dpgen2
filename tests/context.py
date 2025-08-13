@@ -10,9 +10,7 @@ from dpgen2.utils import (
 
 if os.getenv("SKIP_UT_WITH_DFLOW"):
     skip_ut_with_dflow = int(os.getenv("SKIP_UT_WITH_DFLOW")) != 0
-    skip_ut_with_dflow_reason = (
-        "skip because environment variable SKIP_UT_WITH_DFLOW is set to non-zero"
-    )
+    skip_ut_with_dflow_reason = "skip because environment variable SKIP_UT_WITH_DFLOW is set to non-zero"
 else:
     skip_ut_with_dflow = False
     skip_ut_with_dflow_reason = ""

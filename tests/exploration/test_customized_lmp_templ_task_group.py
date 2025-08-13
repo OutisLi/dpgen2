@@ -125,11 +125,7 @@ class TestLmpTemplateTaskGroup(unittest.TestCase):
         ngroup = len(task_group)
         self.assertEqual(
             ngroup,
-            len(self.confs)
-            * len(self.lmp_rev_mat["V_NSTEPS"])
-            * len(self.lmp_rev_mat["V_TEMP"])
-            * len(self.lmp_rev_mat["V_DIST0"])
-            * 2,
+            len(self.confs) * len(self.lmp_rev_mat["V_NSTEPS"]) * len(self.lmp_rev_mat["V_TEMP"]) * len(self.lmp_rev_mat["V_DIST0"]) * 2,
         )
         idx = 0
         for cc, dd, ii, jj, kk in itertools.product(
@@ -223,10 +219,7 @@ class TestLmpTemplateTaskGroupLmp(unittest.TestCase):
         ngroup = len(task_group)
         self.assertEqual(
             ngroup,
-            len(self.confs)
-            * len(self.lmp_rev_mat["V_NSTEPS"])
-            * len(self.lmp_rev_mat["V_TEMP"])
-            * 2,
+            len(self.confs) * len(self.lmp_rev_mat["V_NSTEPS"]) * len(self.lmp_rev_mat["V_TEMP"]) * 2,
         )
         idx = 0
         for cc, dd, ii, jj in itertools.product(
@@ -254,8 +247,5 @@ class TestLmpTemplateTaskGroupLmp(unittest.TestCase):
         ngroup = len(task_group)
         self.assertEqual(
             ngroup,
-            len(self.confs)
-            * len(self.lmp_rev_mat["V_NSTEPS"])
-            * len(self.lmp_rev_mat["V_TEMP"])
-            * 2,
+            len(self.confs) * len(self.lmp_rev_mat["V_NSTEPS"]) * len(self.lmp_rev_mat["V_TEMP"]) * 2,
         )

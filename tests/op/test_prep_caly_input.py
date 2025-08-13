@@ -63,15 +63,9 @@ class TestPrepCalyInput(unittest.TestCase):
         njobs = 2
         self.caly_task_grp = make_task_group_list(njobs)
         self.task_name_path = [calypso_task_pattern % i for i in range(2)]
-        self.input_dat_list = [
-            Path(i) / calypso_input_file for i in self.task_name_path
-        ]
-        self.caly_run_opt_list = [
-            Path(i) / calypso_run_opt_file for i in self.task_name_path
-        ]
-        self.caly_check_opt_list = [
-            Path(i) / calypso_check_opt_file for i in self.task_name_path
-        ]
+        self.input_dat_list = [Path(i) / calypso_input_file for i in self.task_name_path]
+        self.caly_run_opt_list = [Path(i) / calypso_run_opt_file for i in self.task_name_path]
+        self.caly_check_opt_list = [Path(i) / calypso_check_opt_file for i in self.task_name_path]
 
     def tearDown(self):
         for work_dir in self.task_name_path:

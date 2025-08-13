@@ -63,12 +63,8 @@ class CollRunCaly(OP):
                 "cnt_num": Parameter(int),
                 "input_file": Artifact(Path),  # input.dat, !!! must be provided
                 "step": Artifact(type=Path, optional=True),  # step file
-                "results": Artifact(
-                    type=Path, optional=True
-                ),  # dir named results for evo
-                "opt_results_dir": Artifact(
-                    type=List[Path], optional=True
-                ),  # dir contains POSCAR* CONTCAR* OUTCAR*
+                "results": Artifact(type=Path, optional=True),  # dir named results for evo
+                "opt_results_dir": Artifact(type=List[Path], optional=True),  # dir contains POSCAR* CONTCAR* OUTCAR*
                 "qhull_input": Artifact(type=Path, optional=True),  # for vsc
             }
         )
@@ -138,19 +134,13 @@ class CollRunCaly(OP):
         work_dir = Path(ip["task_name"])
 
         step = ip["step"].resolve() if ip["step"] is not None else ip["step"]
-        results = (
-            ip["results"].resolve() if ip["results"] is not None else ip["results"]
-        )
+        results = ip["results"].resolve() if ip["results"] is not None else ip["results"]
         opt_results_dir = []
         if ip["opt_results_dir"] is not None:
             for temp in ip["opt_results_dir"]:
                 opt_results_dir.append(Path(temp).resolve())
 
-        qhull_input = (
-            ip["qhull_input"].resolve()
-            if ip["qhull_input"] is not None
-            else ip["qhull_input"]
-        )
+        qhull_input = ip["qhull_input"].resolve() if ip["qhull_input"] is not None else ip["qhull_input"]
 
         with set_directory(work_dir):
             # prep files/dirs from last calypso run

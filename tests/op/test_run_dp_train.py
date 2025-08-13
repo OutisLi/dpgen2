@@ -91,9 +91,7 @@ class TestRunDPTrain(unittest.TestCase):
         }
         self.config = RunDPTrain.normalize_config(self.config)
 
-        self.old_data_size = (
-            self.init_nframs_0 + self.init_nframs_1 + sum(self.nframes_0)
-        )
+        self.old_data_size = self.init_nframs_0 + self.init_nframs_1 + sum(self.nframes_0)
         self.task_name = "task-000"
         self.task_path = "input-000"
 
@@ -266,53 +264,39 @@ class TestRunDPTrain(unittest.TestCase):
         self.assertEqual(cc, sum(self.nframes_0) + sum(self.nframes_1))
 
     def test_decide_init_model_no_model(self):
-        do_init_model = RunDPTrain.decide_init_model(
-            self.config, None, self.init_data, self.iter_data
-        )
+        do_init_model = RunDPTrain.decide_init_model(self.config, None, self.init_data, self.iter_data)
         self.assertFalse(do_init_model)
 
     def test_decide_init_model_none_iter_data(self):
-        do_init_model = RunDPTrain.decide_init_model(
-            self.config, self.init_model, self.init_data, None
-        )
+        do_init_model = RunDPTrain.decide_init_model(self.config, self.init_model, self.init_data, None)
         self.assertFalse(do_init_model)
 
     def test_decide_init_model_no_iter_data(self):
-        do_init_model = RunDPTrain.decide_init_model(
-            self.config, self.init_model, self.init_data, []
-        )
+        do_init_model = RunDPTrain.decide_init_model(self.config, self.init_model, self.init_data, [])
         self.assertFalse(do_init_model)
 
     def test_decide_init_model_config_no(self):
         config = self.config.copy()
         config["init_model_policy"] = "no"
-        do_init_model = RunDPTrain.decide_init_model(
-            config, self.init_model, self.init_data, self.iter_data
-        )
+        do_init_model = RunDPTrain.decide_init_model(config, self.init_model, self.init_data, self.iter_data)
         self.assertFalse(do_init_model)
 
     def test_decide_init_model_config_yes(self):
         config = self.config.copy()
         config["init_model_policy"] = "yes"
-        do_init_model = RunDPTrain.decide_init_model(
-            config, self.init_model, self.init_data, self.iter_data
-        )
+        do_init_model = RunDPTrain.decide_init_model(config, self.init_model, self.init_data, self.iter_data)
         self.assertTrue(do_init_model)
 
     def test_decide_init_model_config_larger_than_no(self):
         config = self.config.copy()
         config["init_model_policy"] = f"old_data_larger_than:{self.old_data_size}"
-        do_init_model = RunDPTrain.decide_init_model(
-            config, self.init_model, self.init_data, self.iter_data
-        )
+        do_init_model = RunDPTrain.decide_init_model(config, self.init_model, self.init_data, self.iter_data)
         self.assertFalse(do_init_model)
 
     def test_decide_init_model_config_larger_than_yes(self):
         config = self.config.copy()
         config["init_model_policy"] = f"old_data_larger_than:{self.old_data_size - 1}"
-        do_init_model = RunDPTrain.decide_init_model(
-            config, self.init_model, self.init_data, self.iter_data
-        )
+        do_init_model = RunDPTrain.decide_init_model(config, self.init_model, self.init_data, self.iter_data)
         self.assertTrue(do_init_model)
 
     def test_update_input_dict_v1_init_model(self):
@@ -326,9 +310,7 @@ class TestRunDPTrain(unittest.TestCase):
         )
         config = self.config.copy()
         config["init_model_policy"] = "yes"
-        odict = RunDPTrain.write_other_to_input_script(
-            odict, config, True, major_version="1"
-        )
+        odict = RunDPTrain.write_other_to_input_script(odict, config, True, major_version="1")
         self.assertDictEqual(odict, self.expected_init_model_odict_v1)
 
     def test_update_input_dict_v1(self):
@@ -342,9 +324,7 @@ class TestRunDPTrain(unittest.TestCase):
         )
         config = self.config.copy()
         config["init_model_policy"] = "no"
-        odict = RunDPTrain.write_other_to_input_script(
-            odict, config, False, major_version="1"
-        )
+        odict = RunDPTrain.write_other_to_input_script(odict, config, False, major_version="1")
         self.assertDictEqual(odict, self.expected_odict_v1)
 
     def test_update_input_dict_v2_init_model(self):
@@ -359,9 +339,7 @@ class TestRunDPTrain(unittest.TestCase):
         )
         config = self.config.copy()
         config["init_model_policy"] = "yes"
-        odict = RunDPTrain.write_other_to_input_script(
-            odict, config, True, major_version="2"
-        )
+        odict = RunDPTrain.write_other_to_input_script(odict, config, True, major_version="2")
         self.assertDictEqual(odict, self.expected_init_model_odict_v2)
 
     def test_update_input_dict_v2(self):
@@ -376,9 +354,7 @@ class TestRunDPTrain(unittest.TestCase):
         )
         config = self.config.copy()
         config["init_model_policy"] = "no"
-        odict = RunDPTrain.write_other_to_input_script(
-            odict, config, False, major_version="2"
-        )
+        odict = RunDPTrain.write_other_to_input_script(odict, config, False, major_version="2")
         self.assertDictEqual(odict, self.expected_odict_v2)
 
     @patch("dpgen2.op.run_dp_train.run_command")
@@ -838,9 +814,7 @@ class TestRunDPTrainNullIterData(unittest.TestCase):
         )
         config = self.config.copy()
         config["init_model_policy"] = "no"
-        odict = RunDPTrain.write_other_to_input_script(
-            odict, config, False, major_version="2"
-        )
+        odict = RunDPTrain.write_other_to_input_script(odict, config, False, major_version="2")
         self.assertDictEqual(odict, self.expected_odict_v2)
 
     def test_exec_v2_empty_list(self):
@@ -879,9 +853,7 @@ class TestRunDPTrainNullIterData(unittest.TestCase):
         self.assertTrue(out["log"].is_file())
         self.assertEqual(
             out["log"].read_text(),
-            f"We have init model {self.init_model} and "
-            f"no iteration training data. "
-            f"The training is skipped.\n",
+            f"We have init model {self.init_model} and no iteration training data. The training is skipped.\n",
         )
         with open(out["script"]) as fp:
             jdata = json.load(fp)
@@ -963,9 +935,7 @@ class TestSplitValid(unittest.TestCase):
         self.assertEqual(len(s), 1)
 
     def test_split_valid_mixed(self):
-        train_systems, valid_systems = split_valid(
-            ["fake_mixed_data/1", "fake_mixed_data/2"], 0.1
-        )
+        train_systems, valid_systems = split_valid(["fake_mixed_data/1", "fake_mixed_data/2"], 0.1)
         self.assertEqual(len(train_systems), 2)
         ms = dpdata.MultiSystems()
         ms.load_systems_from_file(train_systems[0], fmt="deepmd/npy/mixed")

@@ -164,12 +164,8 @@ class TestFileConfGenerator(unittest.TestCase):
     def test_deepmd_mixed(self):
         type_map = ["Cu", "Al", "Mg"]
         ms = dpdata.MultiSystems(type_map=type_map)
-        ms.append(
-            dpdata.System(Path(self.prefix) / Path("poscar.foo.0"), fmt="vasp/poscar")
-        )
-        ms.append(
-            dpdata.System(Path(self.prefix) / Path("poscar.foo.1"), fmt="vasp/poscar")
-        )
+        ms.append(dpdata.System(Path(self.prefix) / Path("poscar.foo.0"), fmt="vasp/poscar"))
+        ms.append(dpdata.System(Path(self.prefix) / Path("poscar.foo.1"), fmt="vasp/poscar"))
         ms.to("deepmd/npy/mixed", "test_mixed")
         fcg = FileConfGenerator("test_mixed", fmt="deepmd/npy/mixed")
         ms1 = fcg.generate(type_map)

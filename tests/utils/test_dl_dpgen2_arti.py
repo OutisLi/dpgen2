@@ -168,9 +168,7 @@ class TestDownloadDpgen2Artifact(unittest.TestCase):
             shutil.rmtree("iter-000001")
         Path("iter-000001/prep-run-fp/inputs").mkdir(parents=True, exist_ok=True)
         Path("iter-000001/prep-run-fp/outputs").mkdir(parents=True, exist_ok=True)
-        download_dpgen2_artifacts(
-            Mockedwf(), "iter-000001--prep-run-fp", None, chk_pnt=True
-        )
+        download_dpgen2_artifacts(Mockedwf(), "iter-000001--prep-run-fp", None, chk_pnt=True)
         expected = [
             mock.call(
                 "arti-confs",
@@ -199,9 +197,7 @@ class TestDownloadDpgen2Artifact(unittest.TestCase):
         self.assertTrue(Path("iter-000001/prep-run-fp/inputs/done").is_file())
         self.assertTrue(Path("iter-000001/prep-run-fp/outputs/done").is_file())
 
-        download_dpgen2_artifacts(
-            Mockedwf(), "iter-000001--prep-run-fp", None, chk_pnt=True
-        )
+        download_dpgen2_artifacts(Mockedwf(), "iter-000001--prep-run-fp", None, chk_pnt=True)
         expected = [
             mock.call(
                 "arti-confs",

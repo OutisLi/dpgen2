@@ -106,21 +106,14 @@ class CustomizedLmpTemplateTaskGroup(ConfSamplingTaskGroup):
         self.revisions = revisions
         self.traj_freq = traj_freq
         self.has_plm = input_plm_tmpl_name is not None
-        self.do_custom = (
-            custom_shell_commands is not None and custom_shell_commands != []
-        )
+        self.do_custom = custom_shell_commands is not None and custom_shell_commands != []
         if not self.do_custom:
-            raise RuntimeError(
-                "no customized shell command is found, please provide at least 1 "
-                "or use LmpTemplateTaskGroup instead"
-            )
+            raise RuntimeError("no customized shell command is found, please provide at least 1 or use LmpTemplateTaskGroup instead")
 
         self.lmp_template_fn = Path(input_lmp_tmpl_name)
         self.lmp_template_fc = Path(input_lmp_tmpl_name).read_text()
         if self.has_plm:
-            tmp_input_plm_tmpl_name = (
-                input_plm_tmpl_name if input_plm_tmpl_name is not None else ""
-            )
+            tmp_input_plm_tmpl_name = input_plm_tmpl_name if input_plm_tmpl_name is not None else ""
             self.plm_template_fn = Path(tmp_input_plm_tmpl_name)
             self.plm_template_fc = Path(tmp_input_plm_tmpl_name).read_text()
         tmp_input_extra_files = [Path(ii) for ii in input_extra_files]
@@ -129,9 +122,7 @@ class CustomizedLmpTemplateTaskGroup(ConfSamplingTaskGroup):
             tmp_input_extra_files.append(self.plm_template_fn)
         if custom_shell_commands is not None:
             self.input_extra_files = [ii.name for ii in tmp_input_extra_files]
-            self.input_extra_file_contents = [
-                Path(ii).read_text() for ii in tmp_input_extra_files
-            ]
+            self.input_extra_file_contents = [Path(ii).read_text() for ii in tmp_input_extra_files]
         self.custom_shell_commands = custom_shell_commands
         self.output_dir_pattern = output_dir_pattern
         if type(self.output_dir_pattern) is str:
@@ -170,9 +161,7 @@ class CustomizedLmpTemplateTaskGroup(ConfSamplingTaskGroup):
             with set_directory(Path(tmpdir)):
                 Path(self.input_lmp_conf_name).write_text(conf)
                 # copy all customized files
-                for ff, cc in zip(
-                    self.input_extra_files, self.input_extra_file_contents
-                ):
+                for ff, cc in zip(self.input_extra_files, self.input_extra_file_contents):
                     Path(ff).write_text(cc)
                 # run all customized shell commands
                 for ss in self.custom_shell_commands:
@@ -192,13 +181,9 @@ class CustomizedLmpTemplateTaskGroup(ConfSamplingTaskGroup):
                                 )
                             )
                         )
-                        raise FatalError(
-                            f"customized shell command {ss} failed with return code {ret}"
-                        )
+                        raise FatalError(f"customized shell command {ss} failed with return code {ret}")
                 # loop over all pattern matched result dirs
-                for ff in [
-                    ii for ii in sorted(os.listdir(os.getcwd())) if Path(ii).is_dir()
-                ]:
+                for ff in [ii for ii in sorted(os.listdir(os.getcwd())) if Path(ii).is_dir()]:
                     matched_ff = None
                     for pp in self.output_dir_pattern:
                         if re.match(pp, ff):
@@ -206,9 +191,7 @@ class CustomizedLmpTemplateTaskGroup(ConfSamplingTaskGroup):
                             break
                     # no matched continue
                     if matched_ff is None:
-                        logging.info(
-                            f"Dir {ff} does not matches the patter {self.output_dir_pattern} "
-                        )
+                        logging.info(f"Dir {ff} does not matches the patter {self.output_dir_pattern} ")
                         continue
                     with set_directory(Path(matched_ff)):
                         lmp_tgroup = LmpTemplateTaskGroup()

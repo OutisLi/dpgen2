@@ -109,23 +109,15 @@ class TestPrepDPOptim(unittest.TestCase):
             "calypso_run_opt.py",
             "calypso_check_opt.py",
         ]
-        ref_first_opt_path_file_check = [
-            f"POSCAR_{i}" for i in range(1, self.ngrouped + 1)
-        ]
+        ref_first_opt_path_file_check = [f"POSCAR_{i}" for i in range(1, self.ngrouped + 1)]
         first_opt_path_files = sorted(Path(first_opt_path).iterdir())
         for file_name in first_opt_path_files:
-            self.assertTrue(
-                file_name.name
-                in ref_first_opt_path_file_check + ref_common_opt_path_file_check
-            )
+            self.assertTrue(file_name.name in ref_first_opt_path_file_check + ref_common_opt_path_file_check)
 
         ref_last_opt_path_file_check = ["POSCAR_10"]
         last_opt_path_files = sorted(last_opt_path.iterdir())
         for file_name in last_opt_path_files:
-            self.assertTrue(
-                file_name.name
-                in ref_last_opt_path_file_check + ref_common_opt_path_file_check
-            )
+            self.assertTrue(file_name.name in ref_last_opt_path_file_check + ref_common_opt_path_file_check)
 
     def test_01_success(self):
         if Path(self.task_name).is_dir():
@@ -148,6 +140,4 @@ class TestPrepDPOptim(unittest.TestCase):
         # check output
         self.assertEqual(len(out["task_names"]), 1)
         self.assertEqual(len(out["task_dirs"]), 1)
-        self.assertEqual(
-            out["task_names"], [str(Path(self.task_name) / Path("opt_path_0"))]
-        )
+        self.assertEqual(out["task_names"], [str(Path(self.task_name) / Path("opt_path_0"))])

@@ -102,14 +102,10 @@ class TestRunDeepmd(unittest.TestCase):
         self.system.to("deepmd/npy", deepmd_input_path)
 
         # test1
-        self.assertRaisesRegex(
-            FatalError, "is not subset", run_deepmd._prep_input, ["O"]
-        )
+        self.assertRaisesRegex(FatalError, "is not subset", run_deepmd._prep_input, ["O"])
 
         # test2
-        self.assertRaisesRegex(
-            FatalError, "is not subset", run_deepmd._prep_input, ["H"]
-        )
+        self.assertRaisesRegex(FatalError, "is not subset", run_deepmd._prep_input, ["H"])
 
         # test3
         shutil.rmtree(out_name, ignore_errors=True)
@@ -222,10 +218,6 @@ class TestRunDeepmd(unittest.TestCase):
         run_deepmd._dp_infer(dp, ["H", "O"], str(out_name))
 
         dp.eval.assert_called_once()
-        self.assertTrue(
-            np.allclose(dp.eval.call_args[0][0], self.system_nopbc["coords"])
-        )
+        self.assertTrue(np.allclose(dp.eval.call_args[0][0], self.system_nopbc["coords"]))
         self.assertIsNone(dp.eval.call_args[0][1])
-        self.assertEqual(
-            dp.eval.call_args[0][2], self.system_nopbc["atom_types"].tolist()
-        )
+        self.assertEqual(dp.eval.call_args[0][2], self.system_nopbc["atom_types"].tolist())

@@ -115,25 +115,19 @@ class CalyTaskGroup(ExplorationTaskGroup):
         self.numb_of_species = numb_of_species
         self.numb_of_atoms = numb_of_atoms
 
-        if isinstance(name_of_atoms, list) and all(
-            [isinstance(i, list) for i in name_of_atoms]
-        ):
+        if isinstance(name_of_atoms, list) and all([isinstance(i, list) for i in name_of_atoms]):
             overlap = set(name_of_atoms[0])
             for temp in name_of_atoms[1:]:
                 overlap = overlap & set(temp)
 
             if any(map(lambda s: (set(s) - overlap) == 0, name_of_atoms)):
-                raise ValueError(
-                    f"Any sub-list should not equal with intersection, e.g. [[A,B,C], [B,C], [C]] is not allowed."
-                )
+                raise ValueError(f"Any sub-list should not equal with intersection, e.g. [[A,B,C], [B,C], [C]] is not allowed.")
 
             while True:
                 choice = []
                 for _atoms in name_of_atoms:
                     value = random.choice(_atoms)
-                    logging.info(
-                        f"randomly choose {value} from {_atoms}, already choose: {choice}"
-                    )
+                    logging.info(f"randomly choose {value} from {_atoms}, already choose: {choice}")
                     if value in choice:
                         break
                     choice.append(value)
@@ -155,8 +149,7 @@ class CalyTaskGroup(ExplorationTaskGroup):
             for i in range(numb_of_species):
                 for j in range(numb_of_species):
                     temp_distance_mtx[i][j] = round(
-                        updated_table[atomic_number_map[self.name_of_atoms[i]]] * 0.7
-                        + updated_table[atomic_number_map[self.name_of_atoms[j]]] * 0.7,
+                        updated_table[atomic_number_map[self.name_of_atoms[i]]] * 0.7 + updated_table[atomic_number_map[self.name_of_atoms[j]]] * 0.7,
                         2,
                     )
             self.distance_of_ions = temp_distance_mtx

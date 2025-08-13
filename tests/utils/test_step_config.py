@@ -110,9 +110,7 @@ class TestStepConfig(unittest.TestCase):
 
         with dflow_mode("default"):
             ret = init_executor(deepcopy(odict).pop("executor"))
-            self.assertTrue(
-                isinstance(ret, dflow.plugins.dispatcher.DispatcherExecutor)
-            )
+            self.assertTrue(isinstance(ret, dflow.plugins.dispatcher.DispatcherExecutor))
 
     def test_init_executor_notype(self):
         idict = {
@@ -136,6 +134,4 @@ class TestStepConfig(unittest.TestCase):
 
         with dflow_mode("default"):
             ret = init_executor(deepcopy(odict).pop("executor"))
-            self.assertTrue(
-                isinstance(ret, dflow.plugins.dispatcher.DispatcherExecutor)
-            )
+            self.assertTrue(isinstance(ret, dflow.plugins.dispatcher.DispatcherExecutor))

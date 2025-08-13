@@ -319,9 +319,7 @@ class TestLoop(unittest.TestCase):
 
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
 
@@ -329,14 +327,7 @@ class TestLoop(unittest.TestCase):
         # # by MockedConfSelector
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000000"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "labeled_data of " + fp_task_pattern % ii,
@@ -348,14 +339,7 @@ class TestLoop(unittest.TestCase):
             )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "labeled_data of " + fp_task_pattern % ii,
@@ -769,9 +753,7 @@ class TestLoopRestart(unittest.TestCase):
         _steps = wf.query_step(phase=phase)
         steps = []
         for ii in _steps:
-            if ii.type != "Steps" or (
-                ii.key is not None and ii.key in steps_exceptions
-            ):
+            if ii.type != "Steps" or (ii.key is not None and ii.key in steps_exceptions):
                 steps.append(ii)
         return steps
 
@@ -816,9 +798,7 @@ class TestLoopRestart(unittest.TestCase):
         #     if ii['phase'] == 'Succeeded':
         #         steps_0.append(ii)
 
-        steps_0 = self.get_restart_step(
-            wf_0, steps_exceptions=["iter-000000--prep-run-fp"]
-        )
+        steps_0 = self.get_restart_step(wf_0, steps_exceptions=["iter-000000--prep-run-fp"])
 
         fpout_idx = None
         for idx, ii in enumerate(steps_0):
@@ -885,9 +865,7 @@ class TestLoopRestart(unittest.TestCase):
         step = wf_1.query_step(name="dpgen-step")[0]
         self.assertEqual(step.phase, "Succeeded")
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
@@ -896,14 +874,7 @@ class TestLoopRestart(unittest.TestCase):
         # # by MockedConfSelector
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000000"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",
@@ -917,14 +888,7 @@ class TestLoopRestart(unittest.TestCase):
             )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",
@@ -1055,9 +1019,7 @@ class TestLoopRestart(unittest.TestCase):
         step = wf_1.query_step(name="dpgen-step")[0]
         self.assertEqual(step.phase, "Succeeded")
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
@@ -1066,14 +1028,7 @@ class TestLoopRestart(unittest.TestCase):
         # # by MockedConfSelector
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000000"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",
@@ -1087,14 +1042,7 @@ class TestLoopRestart(unittest.TestCase):
             )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",
@@ -1211,9 +1159,7 @@ class TestLoopRestart(unittest.TestCase):
         step = wf_1.query_step(name="dpgen-step")[0]
         self.assertEqual(step.phase, "Succeeded")
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
@@ -1223,14 +1169,7 @@ class TestLoopRestart(unittest.TestCase):
         for ii in range(mocked_numb_select):
             if ii == 0:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "labeled_data of " + fp_task_pattern % ii,
@@ -1242,14 +1181,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
             else:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "restarted",
@@ -1263,14 +1195,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restarted",
@@ -1386,9 +1311,7 @@ class TestLoopRestart(unittest.TestCase):
         step = wf_1.query_step(name="dpgen-step")[0]
         self.assertEqual(step.phase, "Succeeded")
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
@@ -1398,14 +1321,7 @@ class TestLoopRestart(unittest.TestCase):
         for ii in range(mocked_numb_select):
             if ii == 0:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "restart",
@@ -1418,14 +1334,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
             elif ii == 1:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "restart",
@@ -1439,14 +1348,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",
@@ -1507,9 +1409,7 @@ class TestLoopRestart(unittest.TestCase):
         self.assertEqual(step_fp["phase"], "Succeeded")
 
         # step_fp.download_sliced_output_artifact("labeled_data", path="failed_res")
-        download_artifact(
-            step_fp.outputs.artifacts["labeled_data"], slice=1, path="failed_res"
-        )
+        download_artifact(step_fp.outputs.artifacts["labeled_data"], slice=1, path="failed_res")
         for modi_file in [
             Path("failed_res") / "task.000001" / "data_task.000001" / "data",
         ]:
@@ -1565,9 +1465,7 @@ class TestLoopRestart(unittest.TestCase):
         step = wf_1.query_step(name="dpgen-step")[0]
         self.assertEqual(step.phase, "Succeeded")
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
         scheduler = step.outputs.parameters["exploration_scheduler"].value
         self.assertEqual(scheduler.get_stage(), 2)
         self.assertEqual(scheduler.get_iteration(), 1)
@@ -1577,14 +1475,7 @@ class TestLoopRestart(unittest.TestCase):
         for ii in range(mocked_numb_select):
             if ii == 0:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "restart",
@@ -1597,14 +1488,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
             elif ii == 1:
                 self.assertEqual(
-                    (
-                        Path("iter_data")
-                        / "iter-000000"
-                        / ("data_" + fp_task_pattern % ii)
-                        / "data"
-                    )
-                    .read_text()
-                    .strip(),
+                    (Path("iter_data") / "iter-000000" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                     "\n".join(
                         [
                             "restart",
@@ -1618,14 +1502,7 @@ class TestLoopRestart(unittest.TestCase):
                 )
         for ii in range(mocked_numb_select):
             self.assertEqual(
-                (
-                    Path("iter_data")
-                    / "iter-000001"
-                    / ("data_" + fp_task_pattern % ii)
-                    / "data"
-                )
-                .read_text()
-                .strip(),
+                (Path("iter_data") / "iter-000001" / ("data_" + fp_task_pattern % ii) / "data").read_text().strip(),
                 "\n".join(
                     [
                         "restart",

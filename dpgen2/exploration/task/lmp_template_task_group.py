@@ -63,9 +63,7 @@ class LmpTemplateTaskGroup(ConfSamplingTaskGroup):
             self.extra_pair_style_args,
             self.pimd_bead,
         )
-        self.lmp_template = revise_lmp_input_dump(
-            self.lmp_template, self.traj_freq, self.pimd_bead
-        )
+        self.lmp_template = revise_lmp_input_dump(self.lmp_template, self.traj_freq, self.pimd_bead)
         if plm_template_fname is not None:
             self.plm_template = Path(plm_template_fname).read_text().split("\n")
             self.plm_set = True
@@ -163,11 +161,7 @@ def revise_lmp_input_model(
     if extra_pair_style_args:
         extra_pair_style_args = " " + extra_pair_style_args
     graph_list = " ".join(task_model_list)
-    model_devi_file_name = (
-        lmp_pimd_model_devi_name % pimd_bead
-        if pimd_bead is not None
-        else lmp_model_devi_name
-    )
+    model_devi_file_name = lmp_pimd_model_devi_name % pimd_bead if pimd_bead is not None else lmp_model_devi_name
     lmp_lines[idx] = "pair_style      deepmd %s out_freq %d out_file %s%s" % (
         graph_list,
         trj_freq,
@@ -179,12 +173,8 @@ def revise_lmp_input_model(
 
 def revise_lmp_input_dump(lmp_lines, trj_freq, pimd_bead=None):
     idx = find_only_one_key(lmp_lines, ["dump", "dpgen_dump"])
-    lmp_traj_file_name = (
-        lmp_pimd_traj_name % pimd_bead if pimd_bead is not None else lmp_traj_name
-    )
-    lmp_lines[idx] = (
-        f"dump            dpgen_dump all custom {trj_freq} {lmp_traj_file_name} id type x y z"
-    )
+    lmp_traj_file_name = lmp_pimd_traj_name % pimd_bead if pimd_bead is not None else lmp_traj_name
+    lmp_lines[idx] = f"dump            dpgen_dump all custom {trj_freq} {lmp_traj_file_name} id type x y z"
     return lmp_lines
 
 

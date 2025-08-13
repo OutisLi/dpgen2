@@ -99,9 +99,7 @@ class TestConfSelectorFrames(unittest.TestCase):
             traj_render,
             report,
         )
-        confs, report = conf_selector.select(
-            self.trajs, self.model_devis, self.type_map
-        )
+        confs, report = conf_selector.select(self.trajs, self.model_devis, self.type_map)
         ms = dpdata.MultiSystems(type_map=self.type_map)
         ms.from_deepmd_npy(confs[0], labeled=False)
         self.assertEqual(len(ms), 1)
@@ -124,9 +122,7 @@ class TestConfSelectorFrames(unittest.TestCase):
         report = ExplorationReportTrustLevelsRandom(0.25, 0.35, conv_accuracy=0.9)
         traj_render = TrajRenderLammps()
         conf_selector = ConfSelectorFrames(traj_render, report)
-        confs, report = conf_selector.select(
-            self.trajs, self.model_devis, self.type_map
-        )
+        confs, report = conf_selector.select(self.trajs, self.model_devis, self.type_map)
         ms = dpdata.MultiSystems(type_map=self.type_map)
         ms.from_deepmd_npy(confs[0], labeled=False)
         self.assertEqual(len(ms), 1)
@@ -142,17 +138,13 @@ class TestConfSelectorFrames(unittest.TestCase):
         self.assertAlmostEqual(report.failed_ratio(), 1.0 / 3.0)
 
     def test_fv_0(self):
-        report = ExplorationReportTrustLevelsRandom(
-            0.25, 0.35, 0.05, 0.15, conv_accuracy=0.9
-        )
+        report = ExplorationReportTrustLevelsRandom(0.25, 0.35, 0.05, 0.15, conv_accuracy=0.9)
         traj_render = TrajRenderLammps()
         conf_selector = ConfSelectorFrames(
             traj_render,
             report,
         )
-        confs, report = conf_selector.select(
-            self.trajs, self.model_devis, self.type_map
-        )
+        confs, report = conf_selector.select(self.trajs, self.model_devis, self.type_map)
         ms = dpdata.MultiSystems(type_map=self.type_map)
         ms.from_deepmd_npy(confs[0], labeled=False)
         self.assertEqual(len(ms), 1)
@@ -171,18 +163,14 @@ class TestConfSelectorFrames(unittest.TestCase):
         self.assertAlmostEqual(report.failed_ratio(), 2.0 / 3.0)
 
     def test_fv_1(self):
-        report = ExplorationReportTrustLevelsRandom(
-            0.25, 0.35, 0.05, 0.15, conv_accuracy=0.9
-        )
+        report = ExplorationReportTrustLevelsRandom(0.25, 0.35, 0.05, 0.15, conv_accuracy=0.9)
         traj_render = TrajRenderLammps()
         conf_selector = ConfSelectorFrames(
             traj_render,
             report,
             max_numb_sel=1,
         )
-        confs, report = conf_selector.select(
-            self.trajs, self.model_devis, self.type_map
-        )
+        confs, report = conf_selector.select(self.trajs, self.model_devis, self.type_map)
         ms = dpdata.MultiSystems(type_map=self.type_map)
         ms.from_deepmd_npy(confs[0], labeled=False)
         self.assertEqual(len(ms), 1)

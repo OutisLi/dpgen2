@@ -94,10 +94,7 @@ class ConvergenceCheckStageScheduler(StageScheduler):
                         "Please try to increase the higher trust levels. "
                     )
                 # if not stg_complete, check max iter
-                if (
-                    self.max_numb_iter is not None
-                    and self.nxt_iter == self.max_numb_iter
-                ):
+                if self.max_numb_iter is not None and self.nxt_iter == self.max_numb_iter:
                     self.reached_max_iter = True
                     if self.fatal_at_max:
                         raise FatalError("reached maximal number of iterations")

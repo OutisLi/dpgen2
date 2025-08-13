@@ -308,9 +308,7 @@ class PrepCalyInput(OP):
     def get_input_sign(cls):
         return OPIOSign(
             {
-                "caly_task_grp": BigParameter(
-                    BaseExplorationTaskGroup
-                ),  # calypso input params
+                "caly_task_grp": BigParameter(BaseExplorationTaskGroup),  # calypso input params
             }
         )
 

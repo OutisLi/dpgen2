@@ -95,10 +95,7 @@ class TestDownloadDpgen2Artifact(unittest.TestCase):
 
     def test_get_step_defs(self):
         setting = {
-            "foo": DownloadDefinition()
-            .add_input("i0")
-            .add_input("i1")
-            .add_output("o0"),
+            "foo": DownloadDefinition().add_input("i0").add_input("i1").add_output("o0"),
             "bar": DownloadDefinition().add_output("o0").add_output("o1"),
         }
         expected = [
@@ -268,10 +265,7 @@ class TestDownloadDpgen2Artifact(unittest.TestCase):
 
     def test_print_op_dld_setting(self):
         setting = {
-            "foo": DownloadDefinition()
-            .add_input("i0")
-            .add_input("i1")
-            .add_output("o0"),
+            "foo": DownloadDefinition().add_input("i0").add_input("i1").add_output("o0"),
             "bar": DownloadDefinition().add_output("o0").add_output("o1"),
         }
         ret = print_op_download_setting(setting)

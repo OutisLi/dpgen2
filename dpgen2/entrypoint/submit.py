@@ -218,9 +218,7 @@ def make_concurrent_learning_op(
                 upload_python_packages=upload_python_packages,
             )
         else:
-            raise KeyError(
-                f"Unknown key: {explore_style}, support `calypso:default` and `calypso:merge`."
-            )
+            raise KeyError(f"Unknown key: {explore_style}, support `calypso:default` and `calypso:merge`.")
         prep_run_explore_op = PrepRunCaly(
             "prep-run-calypso",
             prep_caly_input_op=PrepCalyInput,
@@ -495,16 +493,9 @@ def workflow_concurrent_learning(
         init_models_paths = config["train"].get("init_models_paths", None)
         numb_models = config["train"]["numb_models"]
         if init_models_paths is not None and len(init_models_paths) != numb_models:
-            raise RuntimeError(
-                f"{len(init_models_paths)} init models provided, which does "
-                "not match numb_models={numb_models}"
-            )
+            raise RuntimeError(f"{len(init_models_paths)} init models provided, which does not match numb_models={{numb_models}}")
     elif train_style == "dp-dist":
-        init_models_paths = (
-            [config["train"]["student_model_path"]]
-            if "student_model_path" in config["train"]
-            else None
-        )
+        init_models_paths = [config["train"]["student_model_path"]] if "student_model_path" in config["train"] else None
         config["train"]["numb_models"] = 1
     else:
         raise RuntimeError(f"unknown params, train_style: {train_style}")
@@ -512,9 +503,7 @@ def workflow_concurrent_learning(
     if upload_python_packages is not None and isinstance(upload_python_packages, str):
         upload_python_packages = [upload_python_packages]
     if upload_python_packages is not None:
-        _upload_python_packages: List[os.PathLike] = [
-            Path(ii) for ii in upload_python_packages
-        ]
+        _upload_python_packages: List[os.PathLike] = [Path(ii) for ii in upload_python_packages]
         upload_python_packages = _upload_python_packages
 
     multitask = config["inputs"]["multitask"]
@@ -567,16 +556,9 @@ def workflow_concurrent_learning(
     else:
         template_script = json.loads(Path(template_script_).read_text())
 
-    if (
-        "teacher_model_path" in explore_config
-        and explore_config["teacher_model_path"] is not None
-    ):
-        assert os.path.exists(explore_config["teacher_model_path"]), (
-            f"No such file: {explore_config['teacher_model_path']}"
-        )
-        explore_config["teacher_model_path"] = BinaryFileInput(
-            explore_config["teacher_model_path"]
-        )
+    if "teacher_model_path" in explore_config and explore_config["teacher_model_path"] is not None:
+        assert os.path.exists(explore_config["teacher_model_path"]), f"No such file: {explore_config['teacher_model_path']}"
+        explore_config["teacher_model_path"] = BinaryFileInput(explore_config["teacher_model_path"])
 
     fp_config = {}
     fp_inputs_config = config["fp"]["inputs_config"]
@@ -586,15 +568,9 @@ def workflow_concurrent_learning(
     fp_config["run"] = config["fp"]["run_config"]
     fp_config["extra_output_files"] = config["fp"]["extra_output_files"]
     if fp_style == "deepmd":
-        assert "teacher_model_path" in fp_config["run"], (
-            f"Cannot find 'teacher_model_path' in config['fp']['run_config'] when fp_style == 'deepmd'"
-        )
-        assert os.path.exists(fp_config["run"]["teacher_model_path"]), (
-            f"No such file: {fp_config['run']['teacher_model_path']}"
-        )
-        fp_config["run"]["teacher_model_path"] = BinaryFileInput(
-            fp_config["run"]["teacher_model_path"]
-        )
+        assert "teacher_model_path" in fp_config["run"], f"Cannot find 'teacher_model_path' in config['fp']['run_config'] when fp_style == 'deepmd'"
+        assert os.path.exists(fp_config["run"]["teacher_model_path"]), f"No such file: {fp_config['run']['teacher_model_path']}"
+        fp_config["run"]["teacher_model_path"] = BinaryFileInput(fp_config["run"]["teacher_model_path"])
 
     multitask = config["inputs"]["multitask"]
     if multitask:
@@ -677,14 +653,10 @@ def get_scheduler_ids(
         if get_subkey(ii.key, 1) == "scheduler":
             scheduler_ids.append(idx)
     scheduler_keys = [reuse_step[ii].key for ii in scheduler_ids]
-    assert sorted(scheduler_keys) == scheduler_keys, (
-        "The scheduler keys are not properly sorted"
-    )
+    assert sorted(scheduler_keys) == scheduler_keys, "The scheduler keys are not properly sorted"
 
     if len(scheduler_ids) == 0:
-        logging.warning(
-            "No scheduler found in the workflow, does not do any replacement."
-        )
+        logging.warning("No scheduler found in the workflow, does not do any replacement.")
     return scheduler_ids
 
 
@@ -697,9 +669,7 @@ def update_reuse_step_scheduler(
         return reuse_step
 
     # do replacement
-    reuse_step[scheduler_ids[-1]].modify_output_parameter(
-        "exploration_scheduler", scheduler_new
-    )
+    reuse_step[scheduler_ids[-1]].modify_output_parameter("exploration_scheduler", scheduler_new)
 
     return reuse_step
 
@@ -711,10 +681,7 @@ def copy_scheduler_plans(
     if len(scheduler_old.stage_schedulers) == 0:
         return scheduler_new
     if len(scheduler_new.stage_schedulers) < len(scheduler_old.stage_schedulers):
-        raise RuntimeError(
-            "The new scheduler has less stages than the old scheduler, "
-            "scheduler copy is not supported."
-        )
+        raise RuntimeError("The new scheduler has less stages than the old scheduler, scheduler copy is not supported.")
     # the scheduler_old is planned. minic the init call of the scheduler
     if scheduler_old.get_iteration() > -1:
         scheduler_new.plan_next_iteration()
@@ -731,9 +698,7 @@ def copy_scheduler_plans(
                 )
             for report in old_reports:
                 scheduler_new.plan_next_iteration(report)
-            if old_stage.complete() and (
-                not scheduler_new.stage_schedulers[ii].complete()
-            ):
+            if old_stage.complete() and (not scheduler_new.stage_schedulers[ii].complete()):
                 scheduler_new.force_stage_complete()
         else:
             break
@@ -754,22 +719,14 @@ def submit_concurrent_learning(
     dpgen_step = workflow_concurrent_learning(wf_config)
 
     if reuse_step is not None and replace_scheduler:
-        scheduler_new = copy.deepcopy(
-            dpgen_step.inputs.parameters["exploration_scheduler"].value
-        )
+        scheduler_new = copy.deepcopy(dpgen_step.inputs.parameters["exploration_scheduler"].value)
         idx_old = get_scheduler_ids(reuse_step)[-1]
-        scheduler_old = (
-            reuse_step[idx_old].inputs.parameters["exploration_scheduler"].value
-        )
+        scheduler_old = reuse_step[idx_old].inputs.parameters["exploration_scheduler"].value
         scheduler_new = copy_scheduler_plans(scheduler_new, scheduler_old)
-        exploration_report = (
-            reuse_step[idx_old].inputs.parameters["exploration_report"].value
-        )
+        exploration_report = reuse_step[idx_old].inputs.parameters["exploration_report"].value
         # plan next
         # hack! trajs is set to None...
-        conv, expl_task_grp, selector = scheduler_new.plan_next_iteration(
-            exploration_report, trajs=None
-        )
+        conv, expl_task_grp, selector = scheduler_new.plan_next_iteration(exploration_report, trajs=None)
         # update output of the scheduler step
         reuse_step[idx_old].modify_output_parameter(
             "converged",
@@ -812,11 +769,7 @@ def get_resubmit_keys(
     wf,
 ):
     wf_info = wf.query()
-    all_steps = [
-        step
-        for step in wf_info.get_step(sort_by_generation=True)
-        if step.key is not None
-    ]
+    all_steps = [step for step in wf_info.get_step(sort_by_generation=True) if step.key is not None]
     super_keys = ["prep-run-train", "prep-run-explore", "prep-run-fp"]
     other_keys = [
         "select-confs",
@@ -829,11 +782,7 @@ def get_resubmit_keys(
     for step in all_steps:
         if len(matched_step_key([step.key], super_keys)) > 0:
             sub_steps = wf_info.get_step(parent_id=step.id, sort_by_generation=True)
-            sub_keys = [
-                step.key
-                for step in sub_steps
-                if step.key is not None and step.phase == "Succeeded"
-            ]
+            sub_keys = [step.key for step in sub_steps if step.key is not None and step.phase == "Succeeded"]
             sub_keys = sort_slice_ops(
                 sub_keys,
                 ["run-train", "run-lmp", "run-fp", "diffcsp-gen", "run-relax"],

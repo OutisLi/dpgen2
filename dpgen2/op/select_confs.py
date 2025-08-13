@@ -84,9 +84,7 @@ class SelectConfs(OP):
         trajs = ip["trajs"]
         model_devis = ip["model_devis"]
         optional_outputs = ip["optional_outputs"]
-        trajs, model_devis, optional_outputs = SelectConfs.validate_trajs(
-            trajs, model_devis, optional_outputs
-        )
+        trajs, model_devis, optional_outputs = SelectConfs.validate_trajs(trajs, model_devis, optional_outputs)
 
         confs, report = conf_selector.select(
             trajs,
@@ -110,13 +108,9 @@ class SelectConfs(OP):
     ):
         ntrajs = len(trajs)
         if ntrajs != len(model_devis):
-            raise FatalError(
-                "length of trajs list is not equal to the model_devis list"
-            )
+            raise FatalError("length of trajs list is not equal to the model_devis list")
         if optional_outputs and ntrajs != len(optional_outputs):
-            raise FatalError(
-                "length of trajs list is not equal to the optional_output list"
-            )
+            raise FatalError("length of trajs list is not equal to the optional_output list")
         rett = []
         retm = []
         reto = []
@@ -131,16 +125,12 @@ class SelectConfs(OP):
                     if oo is not None:
                         reto.append(oo)
                     else:
-                        raise FatalError(
-                            f"trajs frame is {tt} while optional_outputs frame is {oo}"
-                        )
+                        raise FatalError(f"trajs frame is {tt} while optional_outputs frame is {oo}")
             elif tt is None and mm is None:
                 if optional_outputs:
                     oo = optional_outputs[i]
                     if oo is not None:
-                        raise FatalError(
-                            f"trajs frame is {tt} while optional_outputs frame is {oo}"
-                        )
+                        raise FatalError(f"trajs frame is {tt} while optional_outputs frame is {oo}")
             else:
                 raise FatalError(f"trajs frame is {tt} while model_devis frame is {mm}")
         return rett, retm, reto

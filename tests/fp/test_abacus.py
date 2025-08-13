@@ -36,12 +36,9 @@ class TestFpOpAbacus(unittest.TestCase):
     def test_abacus(self):
         data_path = Path(__file__).parent / "data.abacus"
         fp_config = {
-            "inputs": FpOpAbacusInputs(
-                data_path / "INPUT", {"Na": data_path / "Na_ONCV_PBE-1.0.upf"}
-            ),
+            "inputs": FpOpAbacusInputs(data_path / "INPUT", {"Na": data_path / "Na_ONCV_PBE-1.0.upf"}),
             "run": {
-                "command": "cp -r %s OUT.ABACUS && cat %s"
-                % (data_path / "OUT.ABACUS", data_path / "log"),
+                "command": "cp -r %s OUT.ABACUS && cat %s" % (data_path / "OUT.ABACUS", data_path / "log"),
             },
             "extra_output_files": [],
         }
@@ -75,8 +72,6 @@ class TestFpOpAbacus(unittest.TestCase):
         step = wf.query_step(key="iter-000000--run-fp-000000")[0]
         log = download_artifact(step.outputs.artifacts["log"], path="output")[0]
         self.assertTrue(os.path.isfile(log))
-        labeled_data = download_artifact(
-            step.outputs.artifacts["labeled_data"], path="output"
-        )[0]
+        labeled_data = download_artifact(step.outputs.artifacts["labeled_data"], path="output")[0]
         s = dpdata.LabeledSystem(labeled_data, fmt="deepmd/npy")
         self.assertEqual(len(s), 1)

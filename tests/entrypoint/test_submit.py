@@ -227,9 +227,7 @@ class TestSubmit(unittest.TestCase):
         self.assertEqual(scheduler.get_stage(), scheduler_new.get_stage())
         self.assertEqual(scheduler.get_iteration(), scheduler_new.get_iteration())
         self.assertEqual(scheduler.complete(), scheduler_new.complete())
-        self.assertEqual(
-            scheduler.print_convergence(), scheduler_new.print_convergence()
-        )
+        self.assertEqual(scheduler.print_convergence(), scheduler_new.print_convergence())
 
     def test_copy_scheduler_complete(self):
         scheduler = ExplorationScheduler()
@@ -390,20 +388,11 @@ def remove_executor_if_debug(conf):
         if "default_step_config" in conf and "executor" in conf["default_step_config"]:
             del conf["default_step_config"]["executor"]
         if "step_configs" in conf:
-            if (
-                "run_train_config" in conf["step_configs"]
-                and "executor" in conf["step_configs"]["run_train_config"]
-            ):
+            if "run_train_config" in conf["step_configs"] and "executor" in conf["step_configs"]["run_train_config"]:
                 del conf["step_configs"]["run_train_config"]["executor"]
-            if (
-                "run_explore_config" in conf["step_configs"]
-                and "executor" in conf["step_configs"]["run_explore_config"]
-            ):
+            if "run_explore_config" in conf["step_configs"] and "executor" in conf["step_configs"]["run_explore_config"]:
                 del conf["step_configs"]["run_explore_config"]["executor"]
-            if (
-                "run_fp_config" in conf["step_configs"]
-                and "executor" in conf["step_configs"]["run_fp_config"]
-            ):
+            if "run_fp_config" in conf["step_configs"] and "executor" in conf["step_configs"]["run_fp_config"]:
                 del conf["step_configs"]["run_fp_config"]["executor"]
 
 

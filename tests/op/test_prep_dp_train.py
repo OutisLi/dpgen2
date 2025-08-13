@@ -86,9 +86,7 @@ class TestPrepDPTrain(unittest.TestCase):
             self.assertTrue((task_paths[ii] / train_script_name).is_file())
 
     def test_template_str_hybrid(self):
-        ip = OPIO(
-            {"template_script": template_script_hybrid, "numb_models": self.numb_models}
-        )
+        ip = OPIO({"template_script": template_script_hybrid, "numb_models": self.numb_models})
 
         faked_rg.faked_random = -1
         with mock.patch("random.randrange", faked_rg.randrange):
@@ -99,12 +97,8 @@ class TestPrepDPTrain(unittest.TestCase):
         for ii in range(self.numb_models):
             with open(Path(train_task_pattern % ii) / train_script_name) as fp:
                 jdata = json.load(fp)
-                self.assertEqual(
-                    jdata["model"]["descriptor"]["list"][0]["seed"], 4 * ii + 0
-                )
-                self.assertEqual(
-                    jdata["model"]["descriptor"]["list"][1]["seed"], 4 * ii + 1
-                )
+                self.assertEqual(jdata["model"]["descriptor"]["list"][0]["seed"], 4 * ii + 0)
+                self.assertEqual(jdata["model"]["descriptor"]["list"][1]["seed"], 4 * ii + 1)
                 self.assertEqual(jdata["model"]["fitting_net"]["seed"], 4 * ii + 2)
                 self.assertEqual(jdata["training"]["seed"], 4 * ii + 3)
 
@@ -146,12 +140,8 @@ class TestPrepDPTrain(unittest.TestCase):
         ii = 0
         with open(Path(train_task_pattern % ii) / train_script_name) as fp:
             jdata = json.load(fp)
-            self.assertEqual(
-                jdata["model"]["descriptor"]["list"][0]["seed"], 4 * ii + 0
-            )
-            self.assertEqual(
-                jdata["model"]["descriptor"]["list"][1]["seed"], 4 * ii + 1
-            )
+            self.assertEqual(jdata["model"]["descriptor"]["list"][0]["seed"], 4 * ii + 0)
+            self.assertEqual(jdata["model"]["descriptor"]["list"][1]["seed"], 4 * ii + 1)
             self.assertEqual(jdata["model"]["fitting_net"]["seed"], 4 * ii + 2)
             self.assertEqual(jdata["training"]["seed"], 4 * ii + 3)
         ii = 1
@@ -177,6 +167,4 @@ class TestPrepDPTrain(unittest.TestCase):
             faked_rg.faked_random = -1
             with mock.patch("random.randrange", faked_rg.randrange):
                 op = self.ptrain.execute(ip)
-        self.assertTrue(
-            "length of the template list should be equal to 2" in str(context.exception)
-        )
+        self.assertTrue("length of the template list should be equal to 2" in str(context.exception))

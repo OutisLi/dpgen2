@@ -269,12 +269,9 @@ def make_calypso_input(
     **kwargs,
 ):
     distance_of_ions = np.array(distance_of_ions)
-    assert (
-        numb_of_species
-        == len(name_of_atoms)
-        == len(atomic_number)
-        == len(numb_of_atoms)
-    ), f"{numb_of_species:}, {name_of_atoms:} {atomic_number:} {numb_of_atoms:}"
+    assert numb_of_species == len(name_of_atoms) == len(atomic_number) == len(numb_of_atoms), (
+        f"{numb_of_species:}, {name_of_atoms:} {atomic_number:} {numb_of_atoms:}"
+    )
     assert distance_of_ions.shape == (
         numb_of_species,
         numb_of_species,
@@ -287,9 +284,7 @@ def make_calypso_input(
         "NumberOfAtoms": " ".join(list(map(str, numb_of_atoms))),
         "PopSize": pop_size,
         "MaxStep": max_step,
-        "DistanceOfIon": "\n".join(
-            [" ".join(list(map(str, i))) for i in distance_of_ions]
-        ),
+        "DistanceOfIon": "\n".join([" ".join(list(map(str, i))) for i in distance_of_ions]),
         # @DistanceOfIon
         # @end
     }

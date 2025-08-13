@@ -88,18 +88,14 @@ class TrajRenderLammps(TrajRender):
             elif self.use_ele_temp == 2:
                 setup_ele_temp(True)
             else:
-                raise ValueError(
-                    "Invalid value for 'use_ele_temp': %s", self.use_ele_temp
-                )
+                raise ValueError("Invalid value for 'use_ele_temp': %s", self.use_ele_temp)
         return ele_temp
 
     def set_ele_temp(self, system, ele_temp):
         if self.use_ele_temp == 1 and ele_temp:
             system.data["fparam"] = np.tile(ele_temp, [len(system), 1])
         elif self.use_ele_temp == 2 and ele_temp:
-            system.data["aparam"] = np.tile(
-                ele_temp, [len(system), system.get_natoms(), 1]
-            )
+            system.data["aparam"] = np.tile(ele_temp, [len(system), system.get_natoms(), 1])
 
     def get_confs(
         self,

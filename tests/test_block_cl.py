@@ -265,9 +265,7 @@ class TestBlockCL(unittest.TestCase):
 
         report = step.outputs.parameters["exploration_report"].value
         download_artifact(step.outputs.artifacts["iter_data"], path="iter_data")
-        download_artifact(
-            step.outputs.artifacts["models"], path=Path("models") / self.name
-        )
+        download_artifact(step.outputs.artifacts["models"], path=Path("models") / self.name)
 
         # we know number of selected data is 2
         # by MockedConfSelector
@@ -282,9 +280,7 @@ class TestBlockCL(unittest.TestCase):
                         f"mocked input {ii}",
                     ]
                 ),
-                (
-                    Path("iter_data") / self.name / ("data_" + task_name) / "data"
-                ).read_text(),
+                (Path("iter_data") / self.name / ("data_" + task_name) / "data").read_text(),
             )
         for ii in self.path_iter_data:
             dname = Path("iter_data") / ii

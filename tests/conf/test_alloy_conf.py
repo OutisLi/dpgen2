@@ -54,9 +54,7 @@ class TestAlloyConfGenerator(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
@@ -73,9 +71,7 @@ class TestAlloyConfGenerator(unittest.TestCase):
     def test_concentration_list(self):
         type_map = ["a", "b"]
         random.seed(0)
-        acg = AlloyConfGenerator(
-            3, ("sc", 2), replicate=(2, 2, 1), concentration=[0.0, 1.0]
-        )
+        acg = AlloyConfGenerator(3, ("sc", 2), replicate=(2, 2, 1), concentration=[0.0, 1.0])
         fcs = acg.get_file_content(type_map, fmt="lammps/lmp")
         sys_list = []
         for ii in fcs:
@@ -85,18 +81,14 @@ class TestAlloyConfGenerator(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
             )
             self.assertEqual(sys_list[ii]["atom_names"], type_map)
             # result at seed == 0
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["atom_types"], [1, 1, 1, 1]
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["atom_types"], [1, 1, 1, 1])
             self.assertEqual(sys_list[ii]["atom_numbs"], [0, 4])
 
     def test_concentration_list_list(self):
@@ -118,9 +110,7 @@ class TestAlloyConfGenerator(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), nframes)
         for ii in range(nframes):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
@@ -169,9 +159,7 @@ class TestAlloyConf(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
@@ -198,9 +186,7 @@ class TestAlloyConf(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
@@ -226,18 +212,14 @@ class TestAlloyConf(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
             )
             self.assertEqual(sys_list[ii]["atom_names"], type_map)
             # result at seed == 0
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["atom_types"], [1, 1, 1, 1]
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["atom_types"], [1, 1, 1, 1])
             self.assertEqual(sys_list[ii]["atom_numbs"], [0, 4])
 
     def test_concentration_list_list(self):
@@ -245,9 +227,7 @@ class TestAlloyConf(unittest.TestCase):
         ac = AlloyConf(("sc", 2), type_map, replicate=(2, 2, 1))
         nframes = 5
         random.seed(0)
-        fcs = ac.generate_file_content(
-            nframes, [[0.0, 1.0], [1.0, 0.0]], fmt="lammps/lmp"
-        )
+        fcs = ac.generate_file_content(nframes, [[0.0, 1.0], [1.0, 0.0]], fmt="lammps/lmp")
         sys_list = []
         for ii in fcs:
             tf = Path(tempfile.NamedTemporaryFile().name)
@@ -256,9 +236,7 @@ class TestAlloyConf(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), nframes)
         for ii in range(nframes):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
@@ -282,18 +260,14 @@ class TestAlloyConf(unittest.TestCase):
         sys_list = ac.generate_systems(3, [0.0, 1.0])
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),
             )
             self.assertEqual(sys_list[ii]["atom_names"], type_map)
             # result at seed == 0
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["atom_types"], [1, 1, 1, 1]
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["atom_types"], [1, 1, 1, 1])
             self.assertEqual(sys_list[ii]["atom_numbs"], [0, 4])
 
     def test_concentration_none_vasp_in_one(self):
@@ -315,9 +289,7 @@ class TestAlloyConf(unittest.TestCase):
             tf.unlink()
         self.assertEqual(len(sys_list), 3)
         for ii in range(3):
-            np.testing.assert_array_almost_equal(
-                sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]])
-            )
+            np.testing.assert_array_almost_equal(sys_list[ii]["cells"][0], np.array([[4, 0, 0], [0, 4, 0], [0, 0, 2]]))
             np.testing.assert_array_almost_equal(
                 np.sort(sys_list[ii]["coords"][0], axis=0),
                 np.sort(np.array([[0, 0, 0], [0, 2, 0], [2, 0, 0], [2, 2, 0]]), axis=0),

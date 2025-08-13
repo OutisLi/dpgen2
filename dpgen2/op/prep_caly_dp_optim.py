@@ -56,9 +56,7 @@ class PrepCalyDPOptim(OP):
                 "task_name": BigParameter(str),  # calypso_task.idx
                 "finished": Parameter(str),
                 "template_slice_config": Parameter(dict),
-                "poscar_dir": Artifact(
-                    Path
-                ),  # from run_calypso first, then from collect_run_caly
+                "poscar_dir": Artifact(Path),  # from run_calypso first, then from collect_run_caly
                 "models_dir": Artifact(Path),  #
                 "caly_run_opt_file": Artifact(Path),  # from prep_caly_input
                 "caly_check_opt_file": Artifact(Path),  # from prep_caly_input
@@ -132,10 +130,7 @@ class PrepCalyDPOptim(OP):
             Path(caly_run_opt_file.name).symlink_to(caly_run_opt_file)
             Path(caly_check_opt_file.name).symlink_to(caly_check_opt_file)
             if finished == "false":
-                grouped_poscar_list = [
-                    poscar_list[i : i + group_size]
-                    for i in range(0, len(poscar_list), group_size)
-                ]
+                grouped_poscar_list = [poscar_list[i : i + group_size] for i in range(0, len(poscar_list), group_size)]
 
                 task_dirs = []
                 for idx, _poscar_list in enumerate(grouped_poscar_list):

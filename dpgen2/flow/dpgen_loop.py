@@ -213,9 +213,7 @@ class ConcurrentLearningLoop(Steps):
         self._keys = self._my_keys[:1] + block_op.keys + self._my_keys[1:3]
         self.step_keys = {}
         for ii in self._my_keys:
-            self.step_keys[ii] = "--".join(
-                ["%s" % self.inputs.parameters["block_id"], ii]
-            )
+            self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii])
 
         self = _loop(
             self,
@@ -270,9 +268,7 @@ class ConcurrentLearning(Steps):
             "explore_config": InputParameter(),
             "fp_config": InputParameter(),
             "exploration_scheduler": InputParameter(),
-            "optional_parameter": InputParameter(
-                type=dict, value=cl_default_optional_parameter
-            ),
+            "optional_parameter": InputParameter(type=dict, value=cl_default_optional_parameter),
         }
 
         self._input_artifacts = {
@@ -352,9 +348,7 @@ def _loop(
     step_config = deepcopy(step_config)
     step_template_config = step_config.pop("template_config")
     step_executor = init_executor(step_config.pop("executor"))
-    block_optional_parameter = make_block_optional_parameter(
-        steps.inputs.parameters["optional_parameter"]
-    )
+    block_optional_parameter = make_block_optional_parameter(steps.inputs.parameters["optional_parameter"])
 
     block_common_parameters = {
         "block_id": steps.inputs.parameters["block_id"],
@@ -399,9 +393,7 @@ def _loop(
         executor=step_executor,
         **step_config,
     )
-    scheduler_step.template.outputs.parameters[
-        "exploration_scheduler"
-    ].global_name = "exploration_scheduler"
+    scheduler_step.template.outputs.parameters["exploration_scheduler"].global_name = "exploration_scheduler"
     steps.add(scheduler_step)
 
     id_step = Step(
@@ -412,9 +404,7 @@ def _loop(
             **step_template_config,
         ),
         parameters={
-            "exploration_scheduler": scheduler_step.outputs.parameters[
-                "exploration_scheduler"
-            ],
+            "exploration_scheduler": scheduler_step.outputs.parameters["exploration_scheduler"],
         },
         artifacts={},
         key=step_keys["id"],
@@ -432,12 +422,8 @@ def _loop(
         "explore_config": steps.inputs.parameters["explore_config"],
         "conf_selector": scheduler_step.outputs.parameters["conf_selector"],
         "fp_config": steps.inputs.parameters["fp_config"],
-        "exploration_scheduler": scheduler_step.outputs.parameters[
-            "exploration_scheduler"
-        ],
-        "optional_parameter": make_next_optional_parameter(
-            steps.inputs.parameters["optional_parameter"]
-        ),
+        "exploration_scheduler": scheduler_step.outputs.parameters["exploration_scheduler"],
+        "optional_parameter": make_next_optional_parameter(steps.inputs.parameters["optional_parameter"]),
         "expl_task_grp": scheduler_step.outputs.parameters["expl_task_grp"],
     }
     next_step = Step(
@@ -453,9 +439,7 @@ def _loop(
     )
     steps.add(next_step)
 
-    steps.outputs.parameters[
-        "exploration_scheduler"
-    ].value_from_expression = if_expression(
+    steps.outputs.parameters["exploration_scheduler"].value_from_expression = if_expression(
         _if=(scheduler_step.outputs.parameters["converged"] == True),
         _then=scheduler_step.outputs.parameters["exploration_scheduler"],
         _else=next_step.outputs.parameters["exploration_scheduler"],
@@ -505,9 +489,7 @@ def _dpgen(
         executor=step_executor,
         **step_config,
     )
-    scheduler_step.template.outputs.parameters[
-        "exploration_scheduler"
-    ].global_name = "exploration_scheduler"
+    scheduler_step.template.outputs.parameters["exploration_scheduler"].global_name = "exploration_scheduler"
     steps.add(scheduler_step)
 
     id_step = Step(
@@ -518,9 +500,7 @@ def _dpgen(
             **step_template_config,
         ),
         parameters={
-            "exploration_scheduler": scheduler_step.outputs.parameters[
-                "exploration_scheduler"
-            ],
+            "exploration_scheduler": scheduler_step.outputs.parameters["exploration_scheduler"],
         },
         artifacts={},
         key=step_keys["id"],
@@ -538,9 +518,7 @@ def _dpgen(
         "explore_config": steps.inputs.parameters["explore_config"],
         "conf_selector": scheduler_step.outputs.parameters["conf_selector"],
         "fp_config": steps.inputs.parameters["fp_config"],
-        "exploration_scheduler": scheduler_step.outputs.parameters[
-            "exploration_scheduler"
-        ],
+        "exploration_scheduler": scheduler_step.outputs.parameters["exploration_scheduler"],
         "optional_parameter": steps.inputs.parameters["optional_parameter"],
         "expl_task_grp": scheduler_step.outputs.parameters["expl_task_grp"],
     }
@@ -557,12 +535,8 @@ def _dpgen(
     )
     steps.add(loop_step)
 
-    steps.outputs.parameters[
-        "exploration_scheduler"
-    ].value_from_parameter = loop_step.outputs.parameters["exploration_scheduler"]
+    steps.outputs.parameters["exploration_scheduler"].value_from_parameter = loop_step.outputs.parameters["exploration_scheduler"]
     steps.outputs.artifacts["models"]._from = loop_step.outputs.artifacts["models"]
-    steps.outputs.artifacts["iter_data"]._from = loop_step.outputs.artifacts[
-        "iter_data"
-    ]
+    steps.outputs.artifacts["iter_data"]._from = loop_step.outputs.artifacts["iter_data"]
 
     return steps

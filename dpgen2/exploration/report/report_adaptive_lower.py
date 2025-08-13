@@ -173,27 +173,13 @@ class ExplorationReportAdaptiveLower(ExplorationReport):
         )
 
         return [
-            Argument(
-                "level_f_hi", float, optional=True, default=0.5, doc=doc_level_f_hi
-            ),
-            Argument(
-                "numb_candi_f", int, optional=True, default=200, doc=doc_numb_candi_f
-            ),
-            Argument(
-                "rate_candi_f", float, optional=True, default=0.01, doc=doc_rate_candi_f
-            ),
-            Argument(
-                "level_v_hi", float, optional=True, default=None, doc=doc_level_v_hi
-            ),
-            Argument(
-                "numb_candi_v", int, optional=True, default=0, doc=doc_numb_candi_v
-            ),
-            Argument(
-                "rate_candi_v", float, optional=True, default=0.0, doc=doc_rate_candi_v
-            ),
-            Argument(
-                "n_checked_steps", int, optional=True, default=2, doc=doc_n_check_steps
-            ),
+            Argument("level_f_hi", float, optional=True, default=0.5, doc=doc_level_f_hi),
+            Argument("numb_candi_f", int, optional=True, default=200, doc=doc_numb_candi_f),
+            Argument("rate_candi_f", float, optional=True, default=0.01, doc=doc_rate_candi_f),
+            Argument("level_v_hi", float, optional=True, default=None, doc=doc_level_v_hi),
+            Argument("numb_candi_v", int, optional=True, default=0, doc=doc_numb_candi_v),
+            Argument("rate_candi_v", float, optional=True, default=0.0, doc=doc_rate_candi_v),
+            Argument("n_checked_steps", int, optional=True, default=2, doc=doc_n_check_steps),
             Argument(
                 "conv_tolerance",
                 float,
@@ -239,9 +225,7 @@ class ExplorationReportAdaptiveLower(ExplorationReport):
         coll_v = []
         # loop over trajs
         for ii in range(ntraj):
-            add_nframes, add_accur, add_failed, add_f, add_v = self._record_one_traj(
-                ii, md_f[ii], md_v[ii]
-            )
+            add_nframes, add_accur, add_failed, add_f, add_v = self._record_one_traj(ii, md_f[ii], md_v[ii])
             self.nframes += add_nframes
             self.accur.update(add_accur)
             self.failed += add_failed
@@ -297,10 +281,7 @@ class ExplorationReportAdaptiveLower(ExplorationReport):
         """
         # check consistency
         if self.has_virial and md_v is None:
-            raise FatalError(
-                "report requires virial model deviation, but no virial "
-                "model deviation is provided."
-            )
+            raise FatalError("report requires virial model deviation, but no virial model deviation is provided.")
         # fake md_v as zeros if None is provided
         if md_v is None:
             md_v = np.zeros_like(md_f)
@@ -328,10 +309,7 @@ class ExplorationReportAdaptiveLower(ExplorationReport):
     ) -> bool:
         if len(seq) <= 1:
             return False
-        conv = [
-            abs(seq[ii - 1] - seq[ii]) < self.conv_tolerance
-            for ii in range(1, len(seq))
-        ]
+        conv = [abs(seq[ii - 1] - seq[ii]) < self.conv_tolerance for ii in range(1, len(seq))]
         return all(conv)
 
     def converged(

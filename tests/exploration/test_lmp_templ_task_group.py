@@ -315,9 +315,7 @@ class TestLmpTemplateTaskGroup(unittest.TestCase):
         ngroup = len(task_group)
         self.assertEqual(
             ngroup,
-            len(self.confs)
-            * len(self.lmp_rev_mat["V_NSTEPS"])
-            * len(self.lmp_rev_mat["V_TEMP"]),
+            len(self.confs) * len(self.lmp_rev_mat["V_NSTEPS"]) * len(self.lmp_rev_mat["V_TEMP"]),
         )
 
         idx = 0
@@ -353,10 +351,7 @@ class TestLmpTemplateTaskGroup(unittest.TestCase):
         ngroup = len(task_group)
         self.assertEqual(
             ngroup,
-            len(self.confs)
-            * len(self.lmp_plm_rev_mat["V_NSTEPS"])
-            * len(self.lmp_plm_rev_mat["V_TEMP"])
-            * len(self.lmp_plm_rev_mat["V_DIST0"]),
+            len(self.confs) * len(self.lmp_plm_rev_mat["V_NSTEPS"]) * len(self.lmp_plm_rev_mat["V_TEMP"]) * len(self.lmp_plm_rev_mat["V_DIST0"]),
         )
         idx = 0
         for cc, ii, jj, kk in itertools.product(
@@ -366,9 +361,7 @@ class TestLmpTemplateTaskGroup(unittest.TestCase):
             range(len(self.lmp_plm_rev_mat["V_DIST0"])),
         ):
             eel = expected_lmp_plm_template.split("\n")
-            eel[0] = eel[0].replace(
-                "V_NSTEPS", str(self.lmp_plm_rev_mat["V_NSTEPS"][ii])
-            )
+            eel[0] = eel[0].replace("V_NSTEPS", str(self.lmp_plm_rev_mat["V_NSTEPS"][ii]))
             eel[3] = eel[3].replace("V_TEMP", str(self.lmp_plm_rev_mat["V_TEMP"][jj]))
             eep = in_plm_template.split("\n")
             eep[0] = eep[0].replace("V_TEMP", str(self.lmp_plm_rev_mat["V_TEMP"][jj]))

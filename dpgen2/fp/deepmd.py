@@ -149,10 +149,7 @@ class RunDeepmd(RunFp):
         conf_type_map = ss["atom_names"]
 
         if not set(conf_type_map).issubset(set(type_map_teacher)):  # type: ignore
-            err_message = (
-                f"the type map of system ({conf_type_map}) is not subset of "
-                + f"the type map of the teacher model ({type_map_teacher})."
-            )
+            err_message = f"the type map of system ({conf_type_map}) is not subset of " + f"the type map of the teacher model ({type_map_teacher})."
             raise FatalError("deepmd labeling failed\n", "err msg", err_message, "\n")
 
         # make sure the order of elements in sys_type_map
@@ -166,9 +163,7 @@ class RunDeepmd(RunFp):
     def _dp_infer(self, dp, type_map_teacher, out_name):
         conf_type_map, temp_type_map = self._prep_input(type_map_teacher)
 
-        ss = dpdata.System(
-            deepmd_temp_path, fmt="deepmd/npy", type_map=type_map_teacher
-        )
+        ss = dpdata.System(deepmd_temp_path, fmt="deepmd/npy", type_map=type_map_teacher)
 
         coord_npy_path_list = list(Path(deepmd_temp_path).glob("*/coord.npy"))
         assert len(coord_npy_path_list) == 1, coord_npy_path_list
@@ -191,9 +186,7 @@ class RunDeepmd(RunFp):
         with open(virial_npy_path, "wb") as f:
             np.save(f, virial_force)
 
-        ss = dpdata.LabeledSystem(
-            deepmd_temp_path, fmt="deepmd/npy", type_map=temp_type_map
-        )
+        ss = dpdata.LabeledSystem(deepmd_temp_path, fmt="deepmd/npy", type_map=temp_type_map)
         ss.apply_type_map(conf_type_map)
         ss.to("deepmd/npy", out_name)
 
@@ -207,9 +200,7 @@ class RunDeepmd(RunFp):
             List of dargs.Argument defines the arguments of `run_task` method.
         """
 
-        doc_deepmd_teacher_model = (
-            "The path of teacher model, which can be loaded by deepmd.infer.DeepPot"
-        )
+        doc_deepmd_teacher_model = "The path of teacher model, which can be loaded by deepmd.infer.DeepPot"
         doc_deepmd_log = "The log file name of dp"
         doc_deepmd_out = "The output dir name of labeled data. In `deepmd/npy` format provided by `dpdata`."
         return [

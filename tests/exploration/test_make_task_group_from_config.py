@@ -53,15 +53,11 @@ class TestMakeLmpTaskGroupFromConfig(unittest.TestCase):
         os.remove(self.config_template["lmp_template_fname"])
 
     def test_npt(self):
-        tgroup = make_lmp_task_group_from_config(
-            self.numb_models, self.mass_map, self.config_npt
-        )
+        tgroup = make_lmp_task_group_from_config(self.numb_models, self.mass_map, self.config_npt)
         self.assertTrue(isinstance(tgroup, NPTTaskGroup))
 
     def test_template(self):
-        tgroup = make_lmp_task_group_from_config(
-            self.numb_models, self.mass_map, self.config_template
-        )
+        tgroup = make_lmp_task_group_from_config(self.numb_models, self.mass_map, self.config_template)
         self.assertTrue(isinstance(tgroup, LmpTemplateTaskGroup))
 
 

@@ -62,9 +62,7 @@ def _make_train_command(
     if impl == "tensorflow" and os.path.isfile("checkpoint"):
         checkpoint = "model.ckpt"
     elif impl == "pytorch" and len(glob.glob("model.ckpt-[0-9]*.pt")) > 0:
-        checkpoint = "model.ckpt-%s.pt" % max(
-            [int(f[11:-3]) for f in glob.glob("model.ckpt-[0-9]*.pt")]
-        )
+        checkpoint = "model.ckpt-%s.pt" % max([int(f[11:-3]) for f in glob.glob("model.ckpt-[0-9]*.pt")])
     else:
         checkpoint = None
     # case of restart
@@ -74,9 +72,7 @@ def _make_train_command(
     # case of init model and finetune
     assert checkpoint is None
     case_init_model = do_init_model and (not init_model_with_finetune)
-    case_finetune = finetune_mode == "finetune" or (
-        do_init_model and init_model_with_finetune
-    )
+    case_finetune = finetune_mode == "finetune" or (do_init_model and init_model_with_finetune)
     if case_init_model:
         init_flag = "--init-frz-model" if impl == "tensorflow" else "--init-model"
         command = dp_command + [
@@ -200,9 +196,7 @@ class RunDPTrain(OP):
         iter_data_old_exp = _expand_all_multi_sys_to_sys(iter_data[:-1])
         iter_data_new_exp = _expand_all_multi_sys_to_sys(iter_data[-1:])
         if config["split_last_iter_valid_ratio"] is not None:
-            train_systems, valid_systems = split_valid(
-                iter_data_new_exp, config["split_last_iter_valid_ratio"]
-            )
+            train_systems, valid_systems = split_valid(iter_data_new_exp, config["split_last_iter_valid_ratio"])
             iter_data_new_exp = train_systems
             valid_data = append_valid_data(config, valid_data, valid_systems)
         iter_data_exp = iter_data_old_exp + iter_data_new_exp
@@ -248,13 +242,9 @@ class RunDPTrain(OP):
             major_version,
             valid_data,
         )
-        train_dict = RunDPTrain.write_other_to_input_script(
-            train_dict, config, do_init_model, major_version
-        )
+        train_dict = RunDPTrain.write_other_to_input_script(train_dict, config, do_init_model, major_version)
 
-        if RunDPTrain.skip_training(
-            work_dir, train_dict, init_model, iter_data, finetune_mode
-        ):
+        if RunDPTrain.skip_training(work_dir, train_dict, init_model, iter_data, finetune_mode):
             return OPIO(
                 {
                     "script": work_dir / train_script_name,
@@ -434,9 +424,7 @@ class RunDPTrain(OP):
             elif major_version == "2":
                 odict["training"]["numb_steps"] = config["init_model_numb_steps"]
             else:
-                raise RuntimeError(
-                    "unsupported DeePMD-kit major version", major_version
-                )
+                raise RuntimeError("unsupported DeePMD-kit major version", major_version)
         return odict
 
     @staticmethod
@@ -455,11 +443,7 @@ class RunDPTrain(OP):
             with set_directory(work_dir):
                 with open(train_script_name, "w") as fp:
                     json.dump(train_dict, fp, indent=4)
-                Path("train.log").write_text(
-                    f"We have init model {init_model} and "
-                    f"no iteration training data. "
-                    f"The training is skipped.\n"
-                )
+                Path("train.log").write_text(f"We have init model {init_model} and no iteration training data. The training is skipped.\n")
                 Path("lcurve.out").touch()
             return True
         else:
@@ -487,14 +471,10 @@ class RunDPTrain(OP):
             elif "old_data_larger_than" in config["init_model_policy"]:
                 old_data_size_level = int(config["init_model_policy"].split(":")[-1])
                 if isinstance(init_data, dict):
-                    init_data_size = _get_data_size_of_all_systems(
-                        sum(init_data.values(), [])
-                    )
+                    init_data_size = _get_data_size_of_all_systems(sum(init_data.values(), []))
                 else:
                     init_data_size = _get_data_size_of_all_systems(init_data)
-                iter_data_old_size = _get_data_size_of_all_mult_sys(
-                    iter_data[:-1], mixed_type=mixed_type
-                )
+                iter_data_old_size = _get_data_size_of_all_mult_sys(iter_data[:-1], mixed_type=mixed_type)
                 old_data_size = init_data_size + iter_data_old_size
                 if old_data_size > old_data_size_level:
                     do_init_model = True
@@ -511,23 +491,15 @@ class RunDPTrain(OP):
         doc_init_model_old_ratio = "The frequency ratio of old data over new data"
         doc_init_model_numb_steps = "The number of training steps when init-model"
         doc_init_model_start_lr = "The start learning rate when init-model"
-        doc_init_model_start_pref_e = (
-            "The start energy prefactor in loss when init-model"
-        )
-        doc_init_model_start_pref_f = (
-            "The start force prefactor in loss when init-model"
-        )
-        doc_init_model_start_pref_v = (
-            "The start virial prefactor in loss when init-model"
-        )
+        doc_init_model_start_pref_e = "The start energy prefactor in loss when init-model"
+        doc_init_model_start_pref_f = "The start force prefactor in loss when init-model"
+        doc_init_model_start_pref_v = "The start virial prefactor in loss when init-model"
         doc_finetune_args = "Extra arguments for finetuning"
         doc_multitask = "Do multitask training"
         doc_head = "Head to use in the multitask training"
         doc_init_model_with_finetune = "Use finetune for init model"
         doc_train_args = "Extra arguments for dp train"
-        doc_split_last_iter_valid_ratio = (
-            "Ratio of valid data if split data of last iter"
-        )
+        doc_split_last_iter_valid_ratio = "Ratio of valid data if split data of last iter"
         return [
             Argument(
                 "command",

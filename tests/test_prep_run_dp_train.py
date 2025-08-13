@@ -76,9 +76,7 @@ default_config = normalize_step_dict(
 )
 
 
-def _check_log(
-    tcase, fname, path, script, init_model, init_data, iter_data, only_check_name=False
-):
+def _check_log(tcase, fname, path, script, init_model, init_data, iter_data, only_check_name=False):
     with open(fname) as fp:
         lines_ = fp.read().strip().split("\n")
     if only_check_name:
@@ -112,9 +110,7 @@ def _check_log(
                 "OK",
             ],
         )
-    tcase.assertEqual(
-        lines[5].split(" "), ["script", str(revised_fname(Path(path) / script)), "OK"]
-    )
+    tcase.assertEqual(lines[5].split(" "), ["script", str(revised_fname(Path(path) / script)), "OK"])
 
 
 def _check_model(

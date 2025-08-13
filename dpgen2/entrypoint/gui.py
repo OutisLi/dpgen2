@@ -25,7 +25,5 @@ def start_dpgui(*, port: int, bind_all: bool, **kwargs):
             start_dpgui,
         )
     except ModuleNotFoundError as e:
-        raise ModuleNotFoundError(
-            "To use DP-GUI, please install the dpgui package:\npip install dpgui"
-        ) from e
+        raise ModuleNotFoundError("To use DP-GUI, please install the dpgui package:\npip install dpgui") from e
     start_dpgui(port=port, bind_all=bind_all)

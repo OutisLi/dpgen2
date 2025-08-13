@@ -54,19 +54,13 @@ class TestArgs(unittest.TestCase):
         self.assertEqual(old_data["model_devi_jobs"], new_data["explore"]["stages"][0])
         new_data["explore"]["configurations"][0].pop("type")
         self.assertEqual(old_data["sys_configs"], new_data["explore"]["configurations"])
-        self.assertEqual(
-            old_data.get("sys_prefix"), new_data["explore"]["configuration_prefix"]
-        )
+        self.assertEqual(old_data.get("sys_prefix"), new_data["explore"]["configuration_prefix"])
         self.assertEqual(old_data["mass_map"], new_data["inputs"]["mass_map"])
         self.assertEqual(old_data["type_map"], new_data["inputs"]["type_map"])
         self.assertEqual(old_data["numb_models"], new_data["train"]["numb_models"])
         self.assertEqual(old_data["fp_task_max"], new_data["fp"]["task_max"])
-        self.assertEqual(
-            old_data["max_numb_iter"], new_data["explore"]["max_numb_iter"]
-        )
-        self.assertEqual(
-            old_data.get("fatal_at_max", True), new_data["explore"]["fatal_at_max"]
-        )
+        self.assertEqual(old_data["max_numb_iter"], new_data["explore"]["max_numb_iter"])
+        self.assertEqual(old_data.get("fatal_at_max", True), new_data["explore"]["fatal_at_max"])
         # self.assertEqual(old_data['conv_accuracy'], new_data['explore']['conv_accuracy'])
         # self.assertEqual(old_data['model_devi_f_trust_lo'], new_data['explore']['f_trust_lo'])
         # self.assertEqual(old_data['model_devi_f_trust_hi'], new_data['explore']['f_trust_hi'])
@@ -77,9 +71,7 @@ class TestArgs(unittest.TestCase):
         self.assertAlmostEqual(new_data["explore"]["convergence"]["level_f_hi"], 0.5)
         self.assertAlmostEqual(new_data["explore"]["convergence"]["conv_accuracy"], 0.9)
         self.assertEqual(old_data.get("train_style", "dp"), new_data["train"]["type"])
-        self.assertEqual(
-            old_data.get("explore_style", "lmp"), new_data["explore"]["type"]
-        )
+        self.assertEqual(old_data.get("explore_style", "lmp"), new_data["explore"]["type"])
         self.assertEqual(old_data.get("fp_style", "vasp"), new_data["fp"]["type"])
         self.assertEqual(
             normalize_step_dict(old_data.get("prep_train_config", default_config)),
@@ -131,13 +123,9 @@ class TestArgs(unittest.TestCase):
             new_data["explore"]["config"],
         )
         self.assertEqual(old_data.get("fp_config", {}), new_data["fp"]["run_config"])
-        self.assertEqual(
-            old_data["fp_pp_files"], new_data["fp"]["inputs_config"]["pp_files"]
-        )
+        self.assertEqual(old_data["fp_pp_files"], new_data["fp"]["inputs_config"]["pp_files"])
         self.assertEqual(old_data["fp_incar"], new_data["fp"]["inputs_config"]["incar"])
-        self.assertEqual(
-            old_data.get("init_data_prefix"), new_data["inputs"]["init_data_prefix"]
-        )
+        self.assertEqual(old_data.get("init_data_prefix"), new_data["inputs"]["init_data_prefix"])
         self.assertEqual(old_data["init_data_sys"], new_data["inputs"]["init_data_sys"])
 
     def test_bohrium(self):

@@ -96,7 +96,5 @@ class FileConfGenerator(ConfGenerator):
             Argument("files", [str, list], optional=False, doc=doc_files),
             Argument("prefix", str, optional=True, default=None, doc=doc_prefix),
             Argument("fmt", str, optional=True, default="auto", doc=doc_fmt),
-            Argument(
-                "remove_pbc", bool, optional=True, default=False, doc=doc_remove_pbc
-            ),
+            Argument("remove_pbc", bool, optional=True, default=False, doc=doc_remove_pbc),
         ]

@@ -53,16 +53,10 @@ def make_lmp_input(
     trj_seperate_files=True,
     pimd_bead: Optional[str] = None,
 ):
-    if (ele_temp_f is not None or ele_temp_a is not None) and Version(
-        deepmd_version
-    ) < Version("1"):
-        raise RuntimeError(
-            "the electron temperature is only supported by deepmd-kit >= 1.0.0, please upgrade your deepmd-kit"
-        )
+    if (ele_temp_f is not None or ele_temp_a is not None) and Version(deepmd_version) < Version("1"):
+        raise RuntimeError("the electron temperature is only supported by deepmd-kit >= 1.0.0, please upgrade your deepmd-kit")
     if ele_temp_f is not None and ele_temp_a is not None:
-        raise RuntimeError(
-            "the frame style ele_temp and atom style ele_temp should not be set at the same time"
-        )
+        raise RuntimeError("the frame style ele_temp and atom style ele_temp should not be set at the same time")
     if "npt" in ensemble and pres is None:
         raise RuntimeError("the pressre should be provided for npt ensemble")
     ret = "variable        NSTEPS          equal %d\n" % nsteps
@@ -91,21 +85,14 @@ def make_lmp_input(
         ret += "neigh_modify    delay %d\n" % neidelay
     ret += "\n"
     ret += "box          tilt large\n"
-    ret += (
-        'if "${restart} > 0" then "read_restart dpgen.restart.*" else "read_data %s"\n'
-        % conf_file
-    )
+    ret += 'if "${restart} > 0" then "read_restart dpgen.restart.*" else "read_data %s"\n' % conf_file
     ret += "change_box   all triclinic\n"
     for jj in range(len(mass_map)):
         ret += "mass            %d %f\n" % (jj + 1, mass_map[jj])
     graph_list = ""
     for ii in graphs:
         graph_list += ii + " "
-    model_devi_file_name = (
-        lmp_pimd_model_devi_name % pimd_bead
-        if pimd_bead is not None
-        else lmp_model_devi_name
-    )
+    model_devi_file_name = lmp_pimd_model_devi_name % pimd_bead if pimd_bead is not None else lmp_model_devi_name
     if Version(deepmd_version) < Version("1"):
         # 0.x
         ret += "pair_style      deepmd %s ${THERMO_FREQ} %s\n" % (
@@ -137,28 +124,17 @@ def make_lmp_input(
     if trj_seperate_files:
         ret += "dump            1 all custom ${DUMP_FREQ} traj/*.lammpstrj id type x y z fx fy fz\n"
     else:
-        lmp_traj_file_name = (
-            lmp_pimd_traj_name % pimd_bead if pimd_bead is not None else lmp_traj_name
-        )
-        ret += (
-            "dump            1 all custom ${DUMP_FREQ} %s id type x y z fx fy fz\n"
-            % lmp_traj_file_name
-        )
+        lmp_traj_file_name = lmp_pimd_traj_name % pimd_bead if pimd_bead is not None else lmp_traj_name
+        ret += "dump            1 all custom ${DUMP_FREQ} %s id type x y z fx fy fz\n" % lmp_traj_file_name
     ret += "restart         10000 dpgen.restart\n"
     ret += "\n"
     if pka_e is None:
-        ret += 'if "${restart} == 0" then "velocity        all create ${TEMP} %d"' % (
-            random.randrange(max_seed - 1) + 1
-        )
+        ret += 'if "${restart} == 0" then "velocity        all create ${TEMP} %d"' % (random.randrange(max_seed - 1) + 1)
     else:
         sys = dpdata.System(conf_file, fmt="lammps/lmp")
         sys_data = sys.data
         pka_mass = mass_map[sys_data["atom_types"][0] - 1]
-        pka_vn = (
-            pka_e
-            * pc.electron_volt
-            / (0.5 * pka_mass * 1e-3 / pc.Avogadro * (pc.angstrom / pc.pico) ** 2)
-        )  # type: ignore
+        pka_vn = pka_e * pc.electron_volt / (0.5 * pka_mass * 1e-3 / pc.Avogadro * (pc.angstrom / pc.pico) ** 2)  # type: ignore
         pka_vn = np.sqrt(pka_vn)
         print(pka_vn)
         pka_vec = _sample_sphere()

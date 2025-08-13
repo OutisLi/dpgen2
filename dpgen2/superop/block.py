@@ -106,9 +106,7 @@ class ConcurrentLearningBlock(Steps):
             "explore_config": InputParameter(),
             "conf_selector": InputParameter(),
             "fp_config": InputParameter(),
-            "optional_parameter": InputParameter(
-                type=dict, value=block_default_optional_parameter
-            ),
+            "optional_parameter": InputParameter(type=dict, value=block_default_optional_parameter),
             "expl_task_grp": InputParameter(),
         }
         self._input_artifacts = {
@@ -138,18 +136,10 @@ class ConcurrentLearningBlock(Steps):
         )
 
         self._my_keys = ["select-confs", "collect-data"]
-        self._keys = (
-            prep_run_dp_train_op.keys
-            + prep_run_explore_op.keys
-            + self._my_keys[:1]
-            + prep_run_fp_op.keys
-            + self._my_keys[1:2]
-        )
+        self._keys = prep_run_dp_train_op.keys + prep_run_explore_op.keys + self._my_keys[:1] + prep_run_fp_op.keys + self._my_keys[1:2]
         self.step_keys = {}
         for ii in self._my_keys:
-            self.step_keys[ii] = "--".join(
-                ["%s" % self.inputs.parameters["block_id"], ii]
-            )
+            self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii])
 
         self = _block_cl(
             self,
@@ -205,12 +195,8 @@ def _block_cl(
     collect_data_template_config = collect_data_config.pop("template_config")
     select_confs_executor = init_executor(select_confs_config.pop("executor"))
     collect_data_executor = init_executor(collect_data_config.pop("executor"))
-    run_dp_train_optional_parameter = make_run_dp_train_optional_parameter(
-        block_steps.inputs.parameters["optional_parameter"]
-    )
-    collect_data_optional_parameter = make_collect_data_optional_parameter(
-        block_steps.inputs.parameters["optional_parameter"]
-    )
+    run_dp_train_optional_parameter = make_run_dp_train_optional_parameter(block_steps.inputs.parameters["optional_parameter"])
+    collect_data_optional_parameter = make_collect_data_optional_parameter(block_steps.inputs.parameters["optional_parameter"])
 
     prep_run_dp_train = Step(
         name + "-prep-run-dp-train",
@@ -227,9 +213,7 @@ def _block_cl(
             "init_data": block_steps.inputs.artifacts["init_data"],
             "iter_data": block_steps.inputs.artifacts["iter_data"],
         },
-        key="--".join(
-            ["%s" % block_steps.inputs.parameters["block_id"], "prep-run-train"]
-        ),
+        key="--".join(["%s" % block_steps.inputs.parameters["block_id"], "prep-run-train"]),
     )
     block_steps.add(prep_run_dp_train)
 
@@ -245,9 +229,7 @@ def _block_cl(
         artifacts={
             "models": prep_run_dp_train.outputs.artifacts["models"],
         },
-        key="--".join(
-            ["%s" % block_steps.inputs.parameters["block_id"], "prep-run-explore"]
-        ),
+        key="--".join(["%s" % block_steps.inputs.parameters["block_id"], "prep-run-explore"]),
     )
     block_steps.add(prep_run_explore)
 
@@ -287,9 +269,7 @@ def _block_cl(
         artifacts={
             "confs": select_confs.outputs.artifacts["confs"],
         },
-        key="--".join(
-            ["%s" % block_steps.inputs.parameters["block_id"], "prep-run-fp"]
-        ),
+        key="--".join(["%s" % block_steps.inputs.parameters["block_id"], "prep-run-fp"]),
     )
     block_steps.add(prep_run_fp)
 
@@ -316,17 +296,9 @@ def _block_cl(
     )
     block_steps.add(collect_data)
 
-    block_steps.outputs.parameters[
-        "exploration_report"
-    ].value_from_parameter = select_confs.outputs.parameters["report"]
-    block_steps.outputs.artifacts["models"]._from = prep_run_dp_train.outputs.artifacts[
-        "models"
-    ]
-    block_steps.outputs.artifacts["iter_data"]._from = collect_data.outputs.artifacts[
-        "iter_data"
-    ]
-    block_steps.outputs.artifacts["trajs"]._from = prep_run_explore.outputs.artifacts[
-        "trajs"
-    ]
+    block_steps.outputs.parameters["exploration_report"].value_from_parameter = select_confs.outputs.parameters["report"]
+    block_steps.outputs.artifacts["models"]._from = prep_run_dp_train.outputs.artifacts["models"]
+    block_steps.outputs.artifacts["iter_data"]._from = collect_data.outputs.artifacts["iter_data"]
+    block_steps.outputs.artifacts["trajs"]._from = prep_run_explore.outputs.artifacts["trajs"]
 
     return block_steps

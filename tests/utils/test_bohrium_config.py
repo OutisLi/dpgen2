@@ -31,9 +31,7 @@ from dpgen2.utils import (
 # isort: on
 
 
-@pytest.mark.server(
-    url="/account/login", response={"code": 0, "data": {"token": "abc"}}, method="POST"
-)
+@pytest.mark.server(url="/account/login", response={"code": 0, "data": {"token": "abc"}}, method="POST")
 @pytest.mark.server(
     url="/brm/v1/storage/token",
     response={

@@ -100,10 +100,7 @@ class CalyEvoStepMerge(OP):
             template=steps,
             slices=Slices(output_artifact=["traj_results"]),
             parameters={k: ip[k] for k in steps.inputs.parameters},
-            artifacts={
-                k: upload_artifact(ip[k]) if ip[k] is not None else None
-                for k in steps.inputs.artifacts
-            },
+            artifacts={k: upload_artifact(ip[k]) if ip[k] is not None else None for k in steps.inputs.artifacts},
             with_param=[0],
         )
         wf.add(step)
@@ -118,9 +115,7 @@ class CalyEvoStepMerge(OP):
         for k in step.outputs.artifacts:
             path_list = download_artifact(step.outputs.artifacts[k])
             if output_sign[k].type == List[Path]:
-                if not isinstance(path_list, list) or any(
-                    [p is not None and not isinstance(p, str) for p in path_list]
-                ):
+                if not isinstance(path_list, list) or any([p is not None and not isinstance(p, str) for p in path_list]):
                     path_list = list(flatten(path_list).values())
                 out[k] = [Path(p) for p in path_list]
             elif output_sign[k].type == Path:

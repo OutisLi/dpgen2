@@ -101,9 +101,7 @@ class RunCalyDPOptim(OP):
             input_files = []
 
         config = ip["config"] if ip["config"] is not None else {}
-        command = config.get(
-            "run_opt_command", "python -u calypso_run_opt.py model.ckpt.pt"
-        )
+        command = config.get("run_opt_command", "python -u calypso_run_opt.py model.ckpt.pt")
 
         work_dir = Path(ip["task_name"])
 

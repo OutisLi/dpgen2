@@ -87,23 +87,13 @@ class PrepCalyModelDevi(OP):
 
         """
         work_dir = Path(ip["task_name"])
-        traj_results_dir = [
-            Path(dir_name).resolve()
-            for dir_name in ip["traj_results"]
-            if dir_name is not None
-        ]
-        trajs = [
-            traj.resolve()
-            for traj_dir in traj_results_dir
-            for traj in Path(traj_dir).rglob("*.traj")
-        ]
+        traj_results_dir = [Path(dir_name).resolve() for dir_name in ip["traj_results"] if dir_name is not None]
+        trajs = [traj.resolve() for traj_dir in traj_results_dir for traj in Path(traj_dir).rglob("*.traj")]
         expl_config = ip["config"]
         group_size = expl_config.get("model_devi_group_size", len(trajs))
 
         with set_directory(work_dir):
-            grouped_trajs_list = [
-                trajs[i : i + group_size] for i in range(0, len(trajs), group_size)
-            ]
+            grouped_trajs_list = [trajs[i : i + group_size] for i in range(0, len(trajs), group_size)]
 
             traj_cnt = 0
             task_dirs = []

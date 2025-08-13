@@ -79,12 +79,8 @@ class ExplorationReportTrustLevels(ExplorationReport):
         return [
             Argument("level_f_lo", float, optional=False, doc=doc_level_f_lo),
             Argument("level_f_hi", float, optional=False, doc=doc_level_f_hi),
-            Argument(
-                "level_v_lo", float, optional=True, default=None, doc=doc_level_v_lo
-            ),
-            Argument(
-                "level_v_hi", float, optional=True, default=None, doc=doc_level_v_hi
-            ),
+            Argument("level_v_lo", float, optional=True, default=None, doc=doc_level_v_lo),
+            Argument("level_v_hi", float, optional=True, default=None, doc=doc_level_v_hi),
             Argument(
                 "conv_accuracy",
                 float,
@@ -113,12 +109,8 @@ class ExplorationReportTrustLevels(ExplorationReport):
         md_v = model_devi.get(DeviManager.MAX_DEVI_V)
 
         for ii in range(ntraj):
-            id_f_cand, id_f_accu, id_f_fail = self._get_indexes(
-                md_f[ii], self.level_f_lo, self.level_f_hi
-            )
-            id_v_cand, id_v_accu, id_v_fail = self._get_indexes(
-                md_v[ii], self.level_v_lo, self.level_v_hi
-            )
+            id_f_cand, id_f_accu, id_f_fail = self._get_indexes(md_f[ii], self.level_f_lo, self.level_f_hi)
+            id_v_cand, id_v_accu, id_v_fail = self._get_indexes(md_v[ii], self.level_v_lo, self.level_v_hi)
             nframes, set_accu, set_cand, set_fail = self._record_one_traj(
                 id_f_accu,
                 id_f_cand,
@@ -138,15 +130,9 @@ class ExplorationReportTrustLevels(ExplorationReport):
         assert len(self.traj_fail) == ntraj
         self.model_devi = model_devi
         self._no_candidate = sum([len(ii) for ii in self.traj_cand]) == 0
-        self._failed_ratio = float(sum([len(ii) for ii in self.traj_fail])) / float(
-            sum(self.traj_nframes)
-        )
-        self._accurate_ratio = float(sum([len(ii) for ii in self.traj_accu])) / float(
-            sum(self.traj_nframes)
-        )
-        self._candidate_ratio = float(sum([len(ii) for ii in self.traj_cand])) / float(
-            sum(self.traj_nframes)
-        )
+        self._failed_ratio = float(sum([len(ii) for ii in self.traj_fail])) / float(sum(self.traj_nframes))
+        self._accurate_ratio = float(sum([len(ii) for ii in self.traj_accu])) / float(sum(self.traj_nframes))
+        self._candidate_ratio = float(sum([len(ii) for ii in self.traj_cand])) / float(sum(self.traj_nframes))
 
     def _get_indexes(
         self,
@@ -181,9 +167,7 @@ class ExplorationReportTrustLevels(ExplorationReport):
             assert id_v_accu is None
             assert id_v_fail is None
         nframes = np.size(np.concatenate((id_f_cand, id_f_accu, id_f_fail)))
-        if (not novirial) and nframes != np.size(
-            np.concatenate((id_v_cand, id_v_accu, id_v_fail))
-        ):
+        if (not novirial) and nframes != np.size(np.concatenate((id_v_cand, id_v_accu, id_v_fail))):
             raise FatalError("number of frames by virial ")
         # nframes
         # to sets
@@ -195,11 +179,7 @@ class ExplorationReportTrustLevels(ExplorationReport):
         set_v_fail = set([]) if novirial else set(id_v_fail)
         # accu, cand, fail
         set_accu = set_f_accu & set_v_accu
-        set_cand = (
-            (set_f_cand & set_v_accu)
-            | (set_f_cand & set_v_cand)
-            | (set_f_accu & set_v_cand)
-        )
+        set_cand = (set_f_cand & set_v_accu) | (set_f_cand & set_v_cand) | (set_f_accu & set_v_cand)
         set_fail = set_f_fail | set_v_fail
         # check size
         assert nframes == len(set_accu | set_cand | set_fail)

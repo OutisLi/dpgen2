@@ -286,12 +286,8 @@ class TestRunRelax(unittest.TestCase):
         self.assertEqual(len(op_out["trajs"]), 1)
         self.assertTrue(op_out["trajs"][0].read_text().startswith("ITEM: TIMESTEP"))
         self.assertEqual(len(op_out["model_devis"]), 1)
-        model_devi = np.array(
-            [0.0, 0.1132373, 0.00632493, 0.04404319, 0.0897801, 0.006415, 0.04564122]
-        )
-        np.testing.assert_array_almost_equal(
-            np.loadtxt(op_out["model_devis"][0]), model_devi
-        )
+        model_devi = np.array([0.0, 0.1132373, 0.00632493, 0.04404319, 0.0897801, 0.006415, 0.04564122])
+        np.testing.assert_array_almost_equal(np.loadtxt(op_out["model_devis"][0]), model_devi)
 
     def tearDown(self):
         if os.path.isdir("task.000000"):

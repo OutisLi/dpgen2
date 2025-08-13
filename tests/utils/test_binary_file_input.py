@@ -109,24 +109,16 @@ class TestBinaryFileInput(unittest.TestCase):
             txt_with_ext.save_as_file,
             self.task_output_path / "output_file.t",
         )
-        self.assertEqual(
-            Path(self.task_output_path / "output_file.t").read_text(), "foo"
-        )
+        self.assertEqual(Path(self.task_output_path / "output_file.t").read_text(), "foo")
 
         txt_with_ext.save_as_file(self.task_output_path / "output_file.txt")
-        self.assertEqual(
-            Path(self.task_output_path / "output_file.txt").read_text(), "foo"
-        )
+        self.assertEqual(Path(self.task_output_path / "output_file.txt").read_text(), "foo")
 
         txt.save_as_file(self.task_output_path / "output_file1.txt")
-        self.assertEqual(
-            Path(self.task_output_path / "output_file1.txt").read_text(), "foo"
-        )
+        self.assertEqual(Path(self.task_output_path / "output_file1.txt").read_text(), "foo")
 
         txt.save_as_file(self.task_output_path / "output_file1.jpg")
-        self.assertEqual(
-            Path(self.task_output_path / "output_file1.jpg").read_text(), "foo"
-        )
+        self.assertEqual(Path(self.task_output_path / "output_file1.jpg").read_text(), "foo")
 
     def test_serialization(self):
         def serialization(obj):
@@ -142,9 +134,7 @@ class TestBinaryFileInput(unittest.TestCase):
         txt = serialization(txt)
 
         txt.save_as_file(self.task_output_path / "output_file.txt")
-        self.assertEqual(
-            Path(self.task_output_path / "output_file.txt").read_text(), "foo"
-        )
+        self.assertEqual(Path(self.task_output_path / "output_file.txt").read_text(), "foo")
 
         # check binary file
         tensor = np.random.random((3, 2))

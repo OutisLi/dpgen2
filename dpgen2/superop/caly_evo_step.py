@@ -157,9 +157,7 @@ def _caly_evo_step(
         elif expl_mode == "merge":
             return None
         else:
-            raise NotImplementedError(
-                f"Unknown expl_mode {expl_mode}, only support `default` and `merge`."
-            )
+            raise NotImplementedError(f"Unknown expl_mode {expl_mode}, only support `default` and `merge`.")
 
     # collect the last step files and run calypso.x to generate structures
     collect_run_calypso = Step(
@@ -208,12 +206,8 @@ def _caly_evo_step(
         artifacts={
             "poscar_dir": collect_run_calypso.outputs.artifacts["poscar_dir"],
             "models_dir": caly_evo_step_steps.inputs.artifacts["models"],
-            "caly_run_opt_file": caly_evo_step_steps.inputs.artifacts[
-                "caly_run_opt_file"
-            ],
-            "caly_check_opt_file": caly_evo_step_steps.inputs.artifacts[
-                "caly_check_opt_file"
-            ],
+            "caly_run_opt_file": caly_evo_step_steps.inputs.artifacts["caly_run_opt_file"],
+            "caly_check_opt_file": caly_evo_step_steps.inputs.artifacts["caly_check_opt_file"],
         },
         key="%s--prep-dp-optim-%s-%s"
         % (
@@ -272,25 +266,19 @@ def _caly_evo_step(
         },
         artifacts={
             "models": caly_evo_step_steps.inputs.artifacts["models"],
-            "input_file": collect_run_calypso.outputs.artifacts[
-                "input_file"
-            ],  # input.dat
+            "input_file": collect_run_calypso.outputs.artifacts["input_file"],  # input.dat
             "results": collect_run_calypso.outputs.artifacts["results"],
             "step": collect_run_calypso.outputs.artifacts["step"],
             "qhull_input": collect_run_calypso.outputs.artifacts["qhull_input"],
             "opt_results_dir": run_dp_optim.outputs.artifacts["optim_results_dir"],
             "caly_run_opt_file": prep_dp_optim.outputs.artifacts["caly_run_opt_file"],
-            "caly_check_opt_file": prep_dp_optim.outputs.artifacts[
-                "caly_check_opt_file"
-            ],
+            "caly_check_opt_file": prep_dp_optim.outputs.artifacts["caly_check_opt_file"],
         },
         when="%s == false" % (collect_run_calypso.outputs.parameters["finished"]),
     )
     caly_evo_step_steps.add(next_step)
 
-    caly_evo_step_steps.outputs.artifacts[
-        "traj_results"
-    ].from_expression = if_expression(
+    caly_evo_step_steps.outputs.artifacts["traj_results"].from_expression = if_expression(
         _if=(collect_run_calypso.outputs.parameters["finished"] == "false"),
         _then=(next_step.outputs.artifacts["traj_results"]),
         _else=(run_dp_optim.outputs.artifacts["traj_results"]),

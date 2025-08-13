@@ -73,9 +73,7 @@ class PrepRunDPTrain(Steps):
             "numb_models": InputParameter(type=int),
             "template_script": InputParameter(),
             "train_config": InputParameter(),
-            "run_optional_parameter": InputParameter(
-                type=dict, value=run_train_op.default_optional_parameter
-            ),
+            "run_optional_parameter": InputParameter(type=dict, value=run_train_op.default_optional_parameter),
         }
         self._input_artifacts = {
             "init_models": InputArtifact(optional=True),
@@ -109,9 +107,7 @@ class PrepRunDPTrain(Steps):
         ii = "prep-train"
         self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii])
         ii = "run-train"
-        self.step_keys[ii] = "--".join(
-            ["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"]
-        )
+        self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"])
 
         self = _prep_run_dp_train(
             self,
@@ -201,9 +197,7 @@ def _prep_run_dp_train(
         parameters={
             "config": train_steps.inputs.parameters["train_config"],
             "task_name": prep_train.outputs.parameters["task_names"],
-            "optional_parameter": train_steps.inputs.parameters[
-                "run_optional_parameter"
-            ],
+            "optional_parameter": train_steps.inputs.parameters["run_optional_parameter"],
         },
         artifacts={
             "task_path": prep_train.outputs.artifacts["task_paths"],
@@ -211,9 +205,7 @@ def _prep_run_dp_train(
             "init_data": train_steps.inputs.artifacts["init_data"],
             "iter_data": train_steps.inputs.artifacts["iter_data"],
             "valid_data": valid_data,
-            "optional_files": upload_artifact(optional_files)
-            if optional_files is not None
-            else None,
+            "optional_files": upload_artifact(optional_files) if optional_files is not None else None,
         },
         with_sequence=argo_sequence(
             argo_len(prep_train.outputs.parameters["task_names"]),
@@ -226,16 +218,10 @@ def _prep_run_dp_train(
     )
     train_steps.add(run_train)
 
-    train_steps.outputs.parameters[
-        "template_script"
-    ].value_from_parameter = train_steps.inputs.parameters["template_script"]
-    train_steps.outputs.artifacts["scripts"]._from = run_train.outputs.artifacts[
-        "script"
-    ]
+    train_steps.outputs.parameters["template_script"].value_from_parameter = train_steps.inputs.parameters["template_script"]
+    train_steps.outputs.artifacts["scripts"]._from = run_train.outputs.artifacts["script"]
     train_steps.outputs.artifacts["models"]._from = run_train.outputs.artifacts["model"]
     train_steps.outputs.artifacts["logs"]._from = run_train.outputs.artifacts["log"]
-    train_steps.outputs.artifacts["lcurves"]._from = run_train.outputs.artifacts[
-        "lcurve"
-    ]
+    train_steps.outputs.artifacts["lcurves"]._from = run_train.outputs.artifacts["lcurve"]
 
     return train_steps

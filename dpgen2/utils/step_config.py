@@ -36,9 +36,7 @@ def variant_executor():
 def template_conf_args():
     doc_image = "The image to run the step."
     doc_timeout = "The time limit of the OP. Unit is second."
-    doc_retry_on_transient_error = (
-        "The number of retry times if a TransientError is raised."
-    )
+    doc_retry_on_transient_error = "The number of retry times if a TransientError is raised."
     doc_timeout_as_transient_error = "Treat the timeout as TransientError."
     doc_envs = "The environmental variables."
     return [

@@ -39,9 +39,7 @@ from dpgen2.utils import (
 
 def make_link(content, ref_key):
     raw_anchor = dargs.dargs.RAW_ANCHOR
-    return (
-        f"`{content} <{ref_key}_>`_" if not raw_anchor else f"`{content} <#{ref_key}>`_"
-    )
+    return f"`{content} <{ref_key}_>`_" if not raw_anchor else f"`{content} <#{ref_key}>`_"
 
 
 def dp_dist_train_args():
@@ -60,9 +58,7 @@ def dp_dist_train_args():
             default=RunDPTrain.normalize_config({}),
             doc=doc_config,
         ),
-        Argument(
-            "template_script", [List[str], str], optional=False, doc=doc_template_script
-        ),
+        Argument("template_script", [List[str], str], optional=False, doc=doc_template_script),
         Argument("student_model_path", str, optional=True, doc=dock_student_model_path),
         Argument(
             "student_model_uri",
@@ -99,9 +95,7 @@ def dp_train_args():
             doc=doc_numb_models,
         ),
         Argument("numb_models", int, optional=True, default=4, doc=doc_numb_models),
-        Argument(
-            "template_script", [List[str], str], optional=False, doc=doc_template_script
-        ),
+        Argument("template_script", [List[str], str], optional=False, doc=doc_template_script),
         Argument(
             "init_models_paths",
             List[str],
@@ -199,9 +193,7 @@ def variant_filter():
 def lmp_args():
     doc_config = "Configuration of lmp exploration"
     doc_max_numb_iter = "Maximum number of iterations per stage"
-    doc_fatal_at_max = (
-        "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
-    )
+    doc_fatal_at_max = "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
     doc_output_nopbc = "Remove pbc of the output configurations"
     doc_convergence = "The method of convergence check."
     doc_configuration = "A list of initial configurations."
@@ -222,15 +214,9 @@ def lmp_args():
             default=RunLmp.normalize_config({}),
             doc=doc_config,
         ),
-        Argument(
-            "max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter
-        ),
-        Argument(
-            "fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max
-        ),
-        Argument(
-            "output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc
-        ),
+        Argument("max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter),
+        Argument("fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max),
+        Argument("output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc),
         Argument(
             "convergence",
             dict,
@@ -292,9 +278,7 @@ def run_expl_caly_conf_args():
 def caly_args():
     doc_config = "Configuration of calypso exploration"
     doc_max_numb_iter = "Maximum number of iterations per stage"
-    doc_fatal_at_max = (
-        "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
-    )
+    doc_fatal_at_max = "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
     doc_output_nopbc = "Remove pbc of the output configurations"
     doc_convergence = "The method of convergence check."
     doc_configuration = "A list of initial configurations."
@@ -315,15 +299,9 @@ def caly_args():
             default=RunLmp.normalize_config({}),
             doc=doc_config,
         ),
-        Argument(
-            "max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter
-        ),
-        Argument(
-            "fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max
-        ),
-        Argument(
-            "output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc
-        ),
+        Argument("max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter),
+        Argument("fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max),
+        Argument("output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc),
         Argument(
             "convergence",
             dict,
@@ -394,9 +372,7 @@ def run_diffcsp_args():
 def diffcsp_args():
     doc_config = "Configuration of DiffCSP exploration"
     doc_max_numb_iter = "Maximum number of iterations per stage"
-    doc_fatal_at_max = (
-        "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
-    )
+    doc_fatal_at_max = "Fatal when the number of iteration per stage reaches the `max_numb_iter`"
     doc_output_nopbc = "Remove pbc of the output configurations"
     doc_convergence = "The method of convergence check."
     doc_stages = (
@@ -415,15 +391,9 @@ def diffcsp_args():
             optional=False,
             doc=doc_config,
         ),
-        Argument(
-            "max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter
-        ),
-        Argument(
-            "fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max
-        ),
-        Argument(
-            "output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc
-        ),
+        Argument("max_numb_iter", int, optional=True, default=10, doc=doc_max_numb_iter),
+        Argument("fatal_at_max", bool, optional=True, default=True, doc=doc_fatal_at_max),
+        Argument("output_nopbc", bool, optional=True, default=False, doc=doc_output_nopbc),
         Argument(
             "convergence",
             dict,
@@ -555,9 +525,7 @@ def input_args():
             doc=doc_init_data_prefix,
         ),
         Argument("mixed_type", bool, optional=True, default=False, doc=doc_mixed_type),
-        Argument(
-            "do_finetune", bool, optional=True, default=False, doc=doc_do_finetune
-        ),
+        Argument("do_finetune", bool, optional=True, default=False, doc=doc_do_finetune),
         Argument(
             "init_data_sys",
             [List[str], str],
@@ -650,9 +618,7 @@ def dflow_conf_args():
     doc_dflow_s3_config = "The S3 configuration passed to dflow"
 
     return [
-        Argument(
-            "dflow_config", dict, optional=True, default=None, doc=doc_dflow_config
-        ),
+        Argument("dflow_config", dict, optional=True, default=None, doc=doc_dflow_config),
         Argument(
             "dflow_s3_config",
             dict,
@@ -667,9 +633,7 @@ def bohrium_conf_args():
     doc_username = "The username of the Bohrium platform"
     doc_password = "The password of the Bohrium platform"
     doc_project_id = "The project ID of the Bohrium platform"
-    doc_host = (
-        "The host name of the Bohrium platform. Will overwrite `dflow_config['host']`"
-    )
+    doc_host = "The host name of the Bohrium platform. Will overwrite `dflow_config['host']`"
     doc_k8s_api_server = "The k8s server of the Bohrium platform. Will overwrite `dflow_config['k8s_api_server']`"
     doc_repo_key = "The repo key of the Bohrium platform. Will overwrite `dflow_s3_config['repo_key']`"
     doc_storage_client = "The storage client of the Bohrium platform. Will overwrite `dflow_s3_config['storage_client']`"
@@ -692,9 +656,7 @@ def bohrium_conf_args():
             default="https://workflows.deepmodeling.com",
             doc=doc_k8s_api_server,
         ),
-        Argument(
-            "repo_key", str, optional=True, default="oss-bohrium", doc=doc_repo_key
-        ),
+        Argument("repo_key", str, optional=True, default="oss-bohrium", doc=doc_repo_key),
         Argument(
             "storage_client",
             str,
@@ -816,7 +778,9 @@ def submit_args(default_step_config=normalize_step_dict({})):
     doc_explore = "The configuration for exploration"
     doc_fp = "The configuration for FP"
     doc_name = "The workflow name, 'dpgen' for default"
-    doc_parallelism = "The parallelism for the workflow. Accept an int that stands for the maximum number of running pods for the workflow. None for default"
+    doc_parallelism = (
+        "The parallelism for the workflow. Accept an int that stands for the maximum number of running pods for the workflow. None for default"
+    )
 
     return (
         dflow_conf_args()
@@ -847,9 +811,7 @@ def submit_args(default_step_config=normalize_step_dict({})):
                 alias=["upload_python_package"],
             ),
             Argument("inputs", dict, input_args(), optional=False, doc=doc_inputs),
-            Argument(
-                "train", dict, [], [variant_train()], optional=False, doc=doc_train
-            ),
+            Argument("train", dict, [], [variant_train()], optional=False, doc=doc_train),
             Argument(
                 "explore",
                 dict,
@@ -860,9 +822,7 @@ def submit_args(default_step_config=normalize_step_dict({})):
             ),
             Argument("fp", dict, [], [variant_fp()], optional=False, doc=doc_fp),
             Argument("name", str, optional=True, default="dpgen", doc=doc_name),
-            Argument(
-                "parallelism", int, optional=True, default=None, doc=doc_parallelism
-            ),
+            Argument("parallelism", int, optional=True, default=None, doc=doc_parallelism),
         ]
     )
 

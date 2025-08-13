@@ -257,13 +257,9 @@ class MockedRunDPTrainCheckOptParam(RunDPTrain):
         ip: OPIO,
     ) -> OPIO:
         if not ip["optional_parameter"]["mixed_type"]:
-            raise FatalError(
-                f"the value of mixed_type is {ip['optional_parameter']['mixed_type']} "
-            )
+            raise FatalError(f"the value of mixed_type is {ip['optional_parameter']['mixed_type']} ")
         if not ip["optional_parameter"]["finetune_mode"]:
-            raise FatalError(
-                f"the value of finetune_mode is {ip['optional_parameter']['finetune_mode']} "
-            )
+            raise FatalError(f"the value of finetune_mode is {ip['optional_parameter']['finetune_mode']} ")
         return MockedRunDPTrain.execute(self, ip)
 
 
@@ -366,9 +362,7 @@ class MockedRunLmp(RunLmp):
         task_id = int(ip["task_name"].split(".")[1])
         assert task_path.is_dir()
         assert ip["task_name"] in str(ip["task_path"])
-        assert len(models) == mocked_numb_models, (
-            f"{len(models)} == {mocked_numb_models}"
-        )
+        assert len(models) == mocked_numb_models, f"{len(models)} == {mocked_numb_models}"
         for ii in range(mocked_numb_models):
             assert ip["models"][ii].is_file()
             assert "model" in str(ip["models"][ii])
@@ -682,9 +676,7 @@ class MockedCollectDataCheckOptParam(CollectData):
         ip: OPIO,
     ) -> OPIO:
         if not ip["optional_parameter"]["mixed_type"]:
-            raise FatalError(
-                f"the value of mixed_type is {ip['optional_parameter']['mixed_type']} "
-            )
+            raise FatalError(f"the value of mixed_type is {ip['optional_parameter']['mixed_type']} ")
         return MockedCollectData.execute(self, ip)
 
 
@@ -800,9 +792,7 @@ class MockedExplorationTaskGroup(ExplorationTaskGroup):
         ntask = mocked_numb_lmp_tasks
         for jj in range(ntask):
             tt = ExplorationTask()
-            tt.add_file(lmp_conf_name, f"mocked conf {jj}").add_file(
-                lmp_input_name, f"mocked input {jj}"
-            )
+            tt.add_file(lmp_conf_name, f"mocked conf {jj}").add_file(lmp_input_name, f"mocked input {jj}")
             self.add_task(tt)
 
     def make_task(self):
@@ -815,9 +805,7 @@ class MockedExplorationTaskGroup1(ExplorationTaskGroup):
         ntask = mocked_numb_lmp_tasks
         for jj in range(ntask):
             tt = ExplorationTask()
-            tt.add_file(lmp_conf_name, f"mocked 1 conf {jj}").add_file(
-                lmp_input_name, f"mocked 1 input {jj}"
-            )
+            tt.add_file(lmp_conf_name, f"mocked 1 conf {jj}").add_file(lmp_input_name, f"mocked 1 input {jj}")
             self.add_task(tt)
 
     def make_task(self):
@@ -830,9 +818,7 @@ class MockedExplorationTaskGroup2(ExplorationTaskGroup):
         ntask = mocked_numb_lmp_tasks
         for jj in range(ntask):
             tt = ExplorationTask()
-            tt.add_file(lmp_conf_name, f"mocked 2 conf {jj}").add_file(
-                lmp_input_name, f"mocked 2 input {jj}"
-            )
+            tt.add_file(lmp_conf_name, f"mocked 2 conf {jj}").add_file(lmp_input_name, f"mocked 2 input {jj}")
             self.add_task(tt)
 
     def make_task(self):
@@ -949,15 +935,9 @@ class MockedCollRunCaly(CollRunCaly):
         work_dir = Path(ip["task_name"])
         work_dir.mkdir(exist_ok=True, parents=True)
 
-        qhull_input = (
-            ip["qhull_input"].resolve()
-            if ip["qhull_input"] is not None
-            else ip["qhull_input"]
-        )
+        qhull_input = ip["qhull_input"].resolve() if ip["qhull_input"] is not None else ip["qhull_input"]
         step = ip["step"].resolve() if ip["step"] is not None else ip["step"]
-        results = (
-            ip["results"].resolve() if ip["results"] is not None else ip["results"]
-        )
+        results = ip["results"].resolve() if ip["results"] is not None else ip["results"]
 
         opt_results_dir = []
         if ip["opt_results_dir"] is not None:
@@ -1053,10 +1033,7 @@ class MockedPrepCalyDPOptim(PrepCalyDPOptim):
         group_size = 2
 
         if finished == "false":
-            grouped_poscar_list = [
-                poscar_list[i : i + group_size]
-                for i in range(0, len(poscar_list), group_size)
-            ]
+            grouped_poscar_list = [poscar_list[i : i + group_size] for i in range(0, len(poscar_list), group_size)]
             task_dirs = []
             for idx, poscar_list in enumerate(grouped_poscar_list):
                 opt_path = Path(f"opt_path_{idx}")

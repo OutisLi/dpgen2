@@ -132,9 +132,7 @@ class RunLmp(OP):
         work_dir = Path(task_name)
 
         if teacher_model is not None:
-            assert len(model_files) == 1, (
-                "One model is enough in knowledge distillation"
-            )
+            assert len(model_files) == 1, "One model is enough in knowledge distillation"
             ext = os.path.splitext(teacher_model.file_name)[-1]
             teacher_model_file = "teacher_model" + ext
             teacher_model.save_as_file(teacher_model_file)
@@ -157,9 +155,7 @@ class RunLmp(OP):
                     mname = pytorch_model_name_pattern % (idx)
                     freeze_model(mm, mname, config.get("model_frozen_head"))
                 else:
-                    raise RuntimeError(
-                        "Model file with extension '%s' is not supported" % ext
-                    )
+                    raise RuntimeError("Model file with extension '%s' is not supported" % ext)
                 model_names.append(mname)
 
             if shuffle_models:
@@ -205,11 +201,7 @@ class RunLmp(OP):
             "traj": work_dir / lmp_traj_name,
             "model_devi": self.get_model_devi(work_dir / lmp_model_devi_name),
         }
-        plm_output = (
-            {"plm_output": work_dir / plm_output_name}
-            if (work_dir / plm_output_name).is_file()
-            else {}
-        )
+        plm_output = {"plm_output": work_dir / plm_output_name} if (work_dir / plm_output_name).is_file() else {}
         ret_dict.update(plm_output)
         if ele_temp is not None:
             ret_dict["optional_output"] = work_dir / "job.json"
@@ -249,12 +241,8 @@ class RunLmp(OP):
                 doc=doc_shuffle_models,
             ),
             Argument("head", str, optional=True, default=None, doc=doc_head),
-            Argument(
-                "use_ele_temp", int, optional=True, default=0, doc=doc_use_ele_temp
-            ),
-            Argument(
-                "model_frozen_head", str, optional=True, default=None, doc=doc_head
-            ),
+            Argument("use_ele_temp", int, optional=True, default=0, doc=doc_use_ele_temp),
+            Argument("model_frozen_head", str, optional=True, default=None, doc=doc_head),
             Argument(
                 "use_hdf5",
                 bool,
@@ -287,9 +275,7 @@ def set_models(lmp_input_name: str, model_names: List[str]):
     with open(lmp_input_name, encoding="utf8") as f:
         lmp_input_lines = f.readlines()
 
-    idx = find_only_one_key(
-        lmp_input_lines, ["pair_style", "deepmd"], raise_not_found=False
-    )
+    idx = find_only_one_key(lmp_input_lines, ["pair_style", "deepmd"], raise_not_found=False)
     if idx is None:
         return
     new_line_split = lmp_input_lines[idx].split()
@@ -305,17 +291,12 @@ def set_models(lmp_input_name: str, model_names: List[str]):
                 match_last = sidx
                 break
     if match_first == -1:
-        raise RuntimeError(
-            f"cannot file model pattern {pattern} in line  {lmp_input_lines[idx]}"
-        )
+        raise RuntimeError(f"cannot file model pattern {pattern} in line  {lmp_input_lines[idx]}")
     if match_last == -1:
         raise RuntimeError(f"last matching index should not be -1, terribly wrong ")
     for ii in range(match_last, len(new_line_split)):
         if re.fullmatch(pattern, new_line_split[ii]) is not None:
-            raise RuntimeError(
-                f"unexpected matching of model pattern {pattern} "
-                f"in line {lmp_input_lines[idx]}"
-            )
+            raise RuntimeError(f"unexpected matching of model pattern {pattern} in line {lmp_input_lines[idx]}")
     new_line_split[match_first:match_last] = model_names
     lmp_input_lines[idx] = " ".join(new_line_split) + "\n"
 

@@ -94,9 +94,7 @@ def make_task_group_list(ngrp, ntask_per_grp):
     for ii in range(ngrp):
         for jj in range(ntask_per_grp):
             tt = ExplorationTask()
-            tt.add_file(lmp_conf_name, f"group{ii} task{jj} conf").add_file(
-                lmp_input_name, f"group{ii} task{jj} input"
-            )
+            tt.add_file(lmp_conf_name, f"group{ii} task{jj} conf").add_file(lmp_input_name, f"group{ii} task{jj} input")
             tgrp.add_task(tt)
     return tgrp
 
@@ -175,12 +173,8 @@ class TestMockedRunLmp(unittest.TestCase):
         for ii in [lmp_conf_name, lmp_input_name] + [ii.name for ii in models]:
             fc.append(Path(ii).read_text())
         self.assertEqual(fc, Path(lmp_log_name).read_text().strip().split("\n"))
-        self.assertEqual(
-            f"traj of {task_name}", Path(lmp_traj_name).read_text().split("\n")[0]
-        )
-        self.assertEqual(
-            f"model_devi of {task_name}", Path(lmp_model_devi_name).read_text()
-        )
+        self.assertEqual(f"traj of {task_name}", Path(lmp_traj_name).read_text().split("\n")[0])
+        self.assertEqual(f"model_devi of {task_name}", Path(lmp_model_devi_name).read_text())
         os.chdir(cwd)
 
     def tearDown(self):
@@ -209,9 +203,7 @@ class TestMockedRunLmp(unittest.TestCase):
             out = op.execute(ip)
             self.assertEqual(out["log"], Path(f"task.{ii:06d}") / lmp_log_name)
             self.assertEqual(out["traj"], Path(f"task.{ii:06d}") / lmp_traj_name)
-            self.assertEqual(
-                out["model_devi"], Path(f"task.{ii:06d}") / lmp_model_devi_name
-            )
+            self.assertEqual(out["model_devi"], Path(f"task.{ii:06d}") / lmp_model_devi_name)
             self.assertTrue(out["log"].is_file())
             self.assertTrue(out["traj"].is_file())
             self.assertTrue(out["model_devi"].is_file())
@@ -259,12 +251,8 @@ class TestPrepRunLmp(unittest.TestCase):
         for ii in [ii.name for ii in models]:
             fc.append((Path("..") / Path(ii)).read_text())
         self.assertEqual(fc, Path(lmp_log_name).read_text().strip().split("\n"))
-        self.assertEqual(
-            f"traj of {task_name}", Path(lmp_traj_name).read_text().split("\n")[0]
-        )
-        self.assertEqual(
-            f"model_devi of {task_name}", Path(lmp_model_devi_name).read_text()
-        )
+        self.assertEqual(f"traj of {task_name}", Path(lmp_traj_name).read_text().split("\n")[0])
+        self.assertEqual(f"model_devi of {task_name}", Path(lmp_model_devi_name).read_text())
         os.chdir(cwd)
 
     def test(self):

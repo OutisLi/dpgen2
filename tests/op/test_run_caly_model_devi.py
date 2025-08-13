@@ -132,15 +132,9 @@ class TestRunCalyModelDevi(unittest.TestCase):
         self.traj_file_4 = self.work_dir.joinpath("4.traj")
         self.traj_file_5 = self.work_dir.joinpath("5.traj")
         self.traj_file_6 = self.work_dir.joinpath("6.traj")
-        self.traj_file_10 = self.work_dir.joinpath(
-            "10.traj"
-        )  # in traj 10, test the abnormal configuration.
-        self.traj_file_20 = self.work_dir.joinpath(
-            "20.traj"
-        )  # in traj 20, test the mix of normal and abnormal configuration.
-        self.traj_file_21 = self.work_dir.joinpath(
-            "21.traj"
-        )  # in traj 21, test the mix of normal and abnormal configuration across pbc.
+        self.traj_file_10 = self.work_dir.joinpath("10.traj")  # in traj 10, test the abnormal configuration.
+        self.traj_file_20 = self.work_dir.joinpath("20.traj")  # in traj 20, test the mix of normal and abnormal configuration.
+        self.traj_file_21 = self.work_dir.joinpath("21.traj")  # in traj 21, test the mix of normal and abnormal configuration across pbc.
 
         write(
             self.traj_file_1,
@@ -210,9 +204,7 @@ class TestRunCalyModelDevi(unittest.TestCase):
         write(self.traj_file_10, self.atoms_abnormalpbc, format="traj")
 
         ### The mixed case ###
-        write(
-            self.traj_file_20, [self.atoms_normal_3, self.atoms_abnormal], format="traj"
-        )
+        write(self.traj_file_20, [self.atoms_normal_3, self.atoms_abnormal], format="traj")
         write(
             self.traj_file_21,
             [self.atoms_normal_1, self.atoms_abnormalpbc],
@@ -263,9 +255,7 @@ ITEM: ATOMS id type x y z fx fy fz
         atoms_list_21 = parse_traj(self.traj_file_21)
 
         self.assertEqual(len(atoms_list_20), 1)  # unreasonable results are omitted
-        self.assertEqual(
-            len(atoms_list_21), 1
-        )  # unreasonable results are omitted, if 2, ase ignors dangerous distances across pbc
+        self.assertEqual(len(atoms_list_21), 1)  # unreasonable results are omitted, if 2, ase ignors dangerous distances across pbc
 
         self.assertAlmostEqual(atoms_list_3[-1], self.atoms_normal_3)
         atoms_list_10 = parse_traj(self.traj_file_10)

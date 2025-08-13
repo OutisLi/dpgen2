@@ -71,8 +71,7 @@ def main_parser() -> argparse.ArgumentParser:
         the argument parser
     """
     parser = argparse.ArgumentParser(
-        description="DPGEN2: concurrent learning workflow generating the "
-        "machine learning potential energy models.",
+        description="DPGEN2: concurrent learning workflow generating the machine learning potential energy models.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     subparsers = parser.add_subparsers(title="Valid subcommands", dest="command")
@@ -84,9 +83,7 @@ def main_parser() -> argparse.ArgumentParser:
         help="Submit DPGEN2 workflow",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser_run.add_argument(
-        "CONFIG", help="the config file in json format defining the workflow."
-    )
+    parser_run.add_argument("CONFIG", help="the config file in json format defining the workflow.")
 
     ##########################################
     # resubmit
@@ -95,9 +92,7 @@ def main_parser() -> argparse.ArgumentParser:
         help="Submit DPGEN2 workflow resuing steps from an existing workflow",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser_resubmit.add_argument(
-        "CONFIG", help="the config file in json format defining the workflow."
-    )
+    parser_resubmit.add_argument("CONFIG", help="the config file in json format defining the workflow.")
     parser_resubmit.add_argument("ID", help="the ID of the existing workflow.")
     parser_resubmit.add_argument(
         "-l",
@@ -274,10 +269,7 @@ def main_parser() -> argparse.ArgumentParser:
     parser_gui.add_argument(
         "--bind_all",
         action="store_true",
-        help=(
-            "Serve on all public interfaces. This will expose your DP-GUI instance "
-            "to the network on both IPv4 and IPv6 (where available)."
-        ),
+        help=("Serve on all public interfaces. This will expose your DP-GUI instance to the network on both IPv4 and IPv6 (where available)."),
     )
 
     # workflow subcommands
@@ -381,9 +373,7 @@ def main():
             download_by_def(
                 wfid,
                 config,
-                iterations=(
-                    expand_idx(args.iterations) if args.iterations is not None else None
-                ),
+                iterations=(expand_idx(args.iterations) if args.iterations is not None else None),
                 step_defs=args.step_definitions,
                 prefix=args.prefix,
                 chk_pnt=args.no_check_point,

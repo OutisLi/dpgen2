@@ -34,11 +34,7 @@ def matched_step_key(
     ret = []
     for kk in all_keys:
         for jj in step_keys:
-            if (
-                re.match(f"iter-[0-9]*--{jj}-[0-9]*", kk)
-                or re.match(f"iter-[0-9]*--{jj}", kk)
-                or re.match(f"init--{jj}", kk)
-            ):
+            if re.match(f"iter-[0-9]*--{jj}-[0-9]*", kk) or re.match(f"iter-[0-9]*--{jj}", kk) or re.match(f"init--{jj}", kk):
                 ret.append(kk)
                 continue
     return ret
@@ -89,10 +85,7 @@ def get_all_schedulers(
     if len(scheduler_keys) == 0:
         return None
     else:
-        all_schedulers = [
-            wf.query_step(key=skey)[0].outputs.parameters["exploration_scheduler"].value
-            for skey in scheduler_keys
-        ]
+        all_schedulers = [wf.query_step(key=skey)[0].outputs.parameters["exploration_scheduler"].value for skey in scheduler_keys]
     return all_schedulers
 
 
@@ -180,10 +173,7 @@ def print_keys_in_nice_format(
             range_1 = slice_1[idx_in_slice] - 1
             idx = range_1
             range_str = range_fmt % (range_0, range_1)
-            ret.append(
-                (range_s_fmt + " : " + "%s -> %s")
-                % (range_str, keys[range_0], keys[range_1])
-            )
+            ret.append((range_s_fmt + " : " + "%s -> %s") % (range_str, keys[range_0], keys[range_1]))
         except ValueError:
             ret.append((normal_fmt + " : " + "%s") % (idx, keys[idx]))
         idx += 1

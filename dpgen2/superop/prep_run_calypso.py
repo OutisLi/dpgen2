@@ -227,12 +227,8 @@ def _prep_run_caly(
         artifacts={
             "models": prep_run_caly_steps.inputs.artifacts["models"],
             "input_file": prep_caly_input.outputs.artifacts["input_dat_files"],
-            "caly_run_opt_file": prep_caly_input.outputs.artifacts[
-                "caly_run_opt_files"
-            ],
-            "caly_check_opt_file": prep_caly_input.outputs.artifacts[
-                "caly_check_opt_files"
-            ],
+            "caly_run_opt_file": prep_caly_input.outputs.artifacts["caly_run_opt_files"],
+            "caly_check_opt_file": prep_caly_input.outputs.artifacts["caly_check_opt_files"],
             "results": temp_value,
             "step": temp_value,
             "opt_results_dir": temp_value,
@@ -260,8 +256,7 @@ def _prep_run_caly(
         artifacts={
             "traj_results": caly_evo_step.outputs.artifacts["traj_results"],
         },
-        key="%s--prep-caly-model-devi"
-        % (prep_run_caly_steps.inputs.parameters["block_id"],),
+        key="%s--prep-caly-model-devi" % (prep_run_caly_steps.inputs.parameters["block_id"],),
         executor=prep_executor,
     )
     prep_run_caly_steps.add(prep_caly_model_devi)
@@ -287,18 +282,13 @@ def _prep_run_caly(
             "traj_dirs": prep_caly_model_devi.outputs.artifacts["grouped_traj_list"],
             "models": prep_run_caly_steps.inputs.artifacts["models"],
         },
-        key="%s--run-caly-model-devi-{{item}}"
-        % (prep_run_caly_steps.inputs.parameters["block_id"],),
+        key="%s--run-caly-model-devi-{{item}}" % (prep_run_caly_steps.inputs.parameters["block_id"],),
         executor=run_executor,
         **prep_config,
     )
     prep_run_caly_steps.add(run_caly_model_devi)
 
-    prep_run_caly_steps.outputs.artifacts[
-        "trajs"
-    ]._from = run_caly_model_devi.outputs.artifacts["traj"]
-    prep_run_caly_steps.outputs.artifacts[
-        "model_devis"
-    ]._from = run_caly_model_devi.outputs.artifacts["model_devi"]
+    prep_run_caly_steps.outputs.artifacts["trajs"]._from = run_caly_model_devi.outputs.artifacts["traj"]
+    prep_run_caly_steps.outputs.artifacts["model_devis"]._from = run_caly_model_devi.outputs.artifacts["model_devi"]
 
     return prep_run_caly_steps

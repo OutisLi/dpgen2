@@ -48,13 +48,10 @@ class GaussianInputs:
             "fragment_guesses=True multiplicity will +1 for each radical, and +2 for each oxygen molecule\n\n"
             "fragment_guesses=False multiplicity will be 1 or 2, but +2 for each oxygen molecule."
         )
-        doc_charge = (
-            "molecule charge. Only used when charge is not provided by the system"
-        )
+        doc_charge = "molecule charge. Only used when charge is not provided by the system"
         doc_basis_set = "custom basis set"
         doc_keywords_high_multiplicity = (
-            "keywords for points with multiple raicals. multiplicity should be auto. "
-            "If not set, fallback to normal keywords"
+            "keywords for points with multiple raicals. multiplicity should be auto. If not set, fallback to normal keywords"
         )
         doc_fragment_guesses = "initial guess generated from fragment guesses. If True, multiplicity should be auto"
         doc_nproc = "Number of CPUs to use"
@@ -209,9 +206,7 @@ class RunGaussian(RunFp):
         doc_gaussian_out = "The output dir name of labeled data. In `deepmd/npy` format provided by `dpdata`."
         doc_post_command = "The command after Gaussian"
         return [
-            Argument(
-                "command", str, optional=True, default="g16", doc=doc_gaussian_cmd
-            ),
+            Argument("command", str, optional=True, default="g16", doc=doc_gaussian_cmd),
             Argument(
                 "out",
                 str,
@@ -219,7 +214,5 @@ class RunGaussian(RunFp):
                 default=fp_default_out_data_name,
                 doc=doc_gaussian_out,
             ),
-            Argument(
-                "post_command", str, optional=True, default=None, doc=doc_post_command
-            ),
+            Argument("post_command", str, optional=True, default=None, doc=doc_post_command),
         ]

@@ -257,10 +257,7 @@ class AlloyConf:
         conf_list       List[dpdata.System]
             A list of generated confs in `dpdata.System`.
         """
-        ret = [
-            self._generate_one_sys(concentration, cell_pert_frac, atom_pert_dist)
-            for ii in range(numb_confs)
-        ]
+        ret = [self._generate_one_sys(concentration, cell_pert_frac, atom_pert_dist) for ii in range(numb_confs)]
         return ret
 
     def _generate_one_sys(
@@ -273,9 +270,7 @@ class AlloyConf:
             cc = [1.0 / float(self.ntypes) for ii in range(self.ntypes)]
         elif type(concentration) is list and type(concentration[0]) is list:
             cc = random.choice(concentration)
-        elif type(concentration) is list and (
-            type(concentration[0]) is float or type(concentration[0]) is int
-        ):
+        elif type(concentration) is list and (type(concentration[0]) is float or type(concentration[0]) is int):
             cc = concentration
         else:
             raise RuntimeError("unsupported concentration type")
@@ -312,15 +307,9 @@ def generate_alloy_conf_args():
         Argument("type_map", list, doc=doc_type_map),
         Argument("replicate", list, optional=True, default=None, doc=doc_replicate),
         Argument("numb_confs", int, optional=True, default=1, doc=doc_numb_confs),
-        Argument(
-            "concentration", list, optional=True, default=None, doc=doc_concentration
-        ),
-        Argument(
-            "cell_pert_frac", float, optional=True, default=0.0, doc=doc_cell_pert_frac
-        ),
-        Argument(
-            "atom_pert_dist", float, optional=True, default=0.0, doc=doc_atom_pert_dist
-        ),
+        Argument("concentration", list, optional=True, default=None, doc=doc_concentration),
+        Argument("cell_pert_frac", float, optional=True, default=0.0, doc=doc_cell_pert_frac),
+        Argument("atom_pert_dist", float, optional=True, default=0.0, doc=doc_atom_pert_dist),
         Argument("fmt", str, optional=True, default="lammps/lmp", doc=doc_fmt),
     ]
 
@@ -337,9 +326,7 @@ def gen_doc(*, make_anchor=True, make_link=True, **kwargs):
     if make_link:
         make_anchor = True
     sca = generate_alloy_conf_args()
-    base = Argument(
-        "conf_config", dict, sca, doc="Generate file content of alloy configurations"
-    )
+    base = Argument("conf_config", dict, sca, doc="Generate file content of alloy configurations")
     ptr = []
     ptr.append(base.gen_doc(make_anchor=make_anchor, make_link=make_link, **kwargs))
 

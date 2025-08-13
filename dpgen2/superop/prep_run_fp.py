@@ -90,9 +90,7 @@ class PrepRunFp(Steps):
         ii = "prep-fp"
         self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii])
         ii = "run-fp"
-        self.step_keys[ii] = "--".join(
-            ["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"]
-        )
+        self.step_keys[ii] = "--".join(["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"])
 
         self = _prep_run_fp(
             self,
@@ -184,9 +182,7 @@ def _prep_run_fp(
         artifacts={
             "task_path": prep_fp.outputs.artifacts["task_paths"],
         },
-        with_sequence=argo_sequence(
-            argo_len(prep_fp.outputs.parameters["task_names"]), format=fp_index_pattern
-        ),
+        with_sequence=argo_sequence(argo_len(prep_fp.outputs.parameters["task_names"]), format=fp_index_pattern),
         # with_param=argo_range(argo_len(prep_fp.outputs.parameters["task_names"])),
         key=step_keys["run-fp"],
         executor=run_executor,
@@ -194,15 +190,9 @@ def _prep_run_fp(
     )
     prep_run_steps.add(run_fp)
 
-    prep_run_steps.outputs.parameters[
-        "task_names"
-    ].value_from_parameter = prep_fp.outputs.parameters["task_names"]
+    prep_run_steps.outputs.parameters["task_names"].value_from_parameter = prep_fp.outputs.parameters["task_names"]
     prep_run_steps.outputs.artifacts["logs"]._from = run_fp.outputs.artifacts["log"]
-    prep_run_steps.outputs.artifacts["labeled_data"]._from = run_fp.outputs.artifacts[
-        "labeled_data"
-    ]
-    prep_run_steps.outputs.artifacts["extra_outputs"]._from = run_fp.outputs.artifacts[
-        "extra_outputs"
-    ]
+    prep_run_steps.outputs.artifacts["labeled_data"]._from = run_fp.outputs.artifacts["labeled_data"]
+    prep_run_steps.outputs.artifacts["extra_outputs"]._from = run_fp.outputs.artifacts["extra_outputs"]
 
     return prep_run_steps

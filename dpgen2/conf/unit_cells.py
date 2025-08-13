@@ -83,9 +83,7 @@ class HCP:
         return 2
 
     def gen_box(self):
-        box = np.array(
-            [[1, 0, 0], [0.5, 0.5 * np.sqrt(3), 0], [0, 0, 2.0 * np.sqrt(2.0 / 3.0)]]
-        )
+        box = np.array([[1, 0, 0], [0.5, 0.5 * np.sqrt(3), 0], [0, 0, 2.0 * np.sqrt(2.0 / 3.0)]])
         return box
 
     def poscar_unit(self, latt):

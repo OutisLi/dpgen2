@@ -177,11 +177,7 @@ class RunRelax(OP):
                 step_list.append(i)
                 # Use results of model 0 directly
                 forces_list[0].append(data["forces"][i])
-                virial_list[0].append(
-                    -atoms.get_volume()
-                    * atoms.get_stress(False).reshape(9)
-                    / len(atoms)
-                )
+                virial_list[0].append(-atoms.get_volume() * atoms.get_stress(False).reshape(9) / len(atoms))
             for j in range(1, len(models)):
                 dp = graphs[j]
                 atype = [
@@ -214,9 +210,7 @@ class RunRelax(OP):
     def relax_args():
         doc_head = "Select a head from multitask"
         return [
-            Argument(
-                "model_frozen_head", str, optional=True, default=None, doc=doc_head
-            ),
+            Argument("model_frozen_head", str, optional=True, default=None, doc=doc_head),
         ]
 
     @staticmethod

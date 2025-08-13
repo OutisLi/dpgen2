@@ -307,17 +307,11 @@ class TestExplorationScheduler(unittest.TestCase):
         conv, ltg, sel = scheduler.plan_next_iteration()
         self.assertEqual(scheduler.print_convergence(), "No finished iteration found\n")
         conv, ltg, sel = scheduler.plan_next_iteration(tar_report, [])
-        self.assertEqual(
-            scheduler.print_convergence(), "\n".join(expected_output[:3]) + "\n"
-        )
+        self.assertEqual(scheduler.print_convergence(), "\n".join(expected_output[:3]) + "\n")
         conv, ltg, sel = scheduler.plan_next_iteration(foo_report, [])
-        self.assertEqual(
-            scheduler.print_convergence(), "\n".join(expected_output[:6]) + "\n"
-        )
+        self.assertEqual(scheduler.print_convergence(), "\n".join(expected_output[:6]) + "\n")
         conv, ltg, sel = scheduler.plan_next_iteration(bar_report, [])
-        self.assertEqual(
-            scheduler.print_convergence(), "\n".join(expected_output) + "\n"
-        )
+        self.assertEqual(scheduler.print_convergence(), "\n".join(expected_output) + "\n")
 
     def test_print_scheduler_last_iteration(self):
         scheduler = ExplorationScheduler()
@@ -362,26 +356,18 @@ class TestExplorationScheduler(unittest.TestCase):
             "        1        1        2     1.0000     0.0000     0.0000     0.2000     0.4000     True",
             "# All stages converged",
         ]
-        self.assertEqual(
-            scheduler.print_last_iteration(), "No finished iteration found\n"
-        )
+        self.assertEqual(scheduler.print_last_iteration(), "No finished iteration found\n")
         conv, ltg, sel = scheduler.plan_next_iteration()
-        self.assertEqual(
-            scheduler.print_last_iteration(), "No finished iteration found\n"
-        )
+        self.assertEqual(scheduler.print_last_iteration(), "No finished iteration found\n")
         conv, ltg, sel = scheduler.plan_next_iteration(tar_report, [])
         self.assertEqual(
             scheduler.print_last_iteration(print_header=True),
             "\n".join(expected_output[:2]) + "\n",
         )
         conv, ltg, sel = scheduler.plan_next_iteration(foo_report, [])
-        self.assertEqual(
-            scheduler.print_last_iteration(), "\n".join(expected_output[2:3]) + "\n"
-        )
+        self.assertEqual(scheduler.print_last_iteration(), "\n".join(expected_output[2:3]) + "\n")
         conv, ltg, sel = scheduler.plan_next_iteration(bar_report, [])
-        self.assertEqual(
-            scheduler.print_last_iteration(), "\n".join(expected_output[3:]) + "\n"
-        )
+        self.assertEqual(scheduler.print_last_iteration(), "\n".join(expected_output[3:]) + "\n")
 
     def test_success_and_ratios(self):
         scheduler = ExplorationScheduler()
@@ -735,9 +721,7 @@ class TestExplorationScheduler(unittest.TestCase):
         self.assertFalse(scheduler.stage_schedulers[0].converged())
         self.assertFalse(scheduler.stage_schedulers[1].converged())
         self.assertFalse(scheduler.complete())
-        with self.assertRaisesRegex(
-            FatalError, "stage 0: reached maximal number of iterations"
-        ):
+        with self.assertRaisesRegex(FatalError, "stage 0: reached maximal number of iterations"):
             conv, ltg, sel = scheduler.plan_next_iteration(foo_report, [])
 
     def test_failed_stage0_not_fatal(self):
@@ -884,7 +868,5 @@ class TestExplorationScheduler(unittest.TestCase):
         self.assertEqual(len(scheduler.stage_schedulers), 2)
         self.assertTrue(scheduler.stage_schedulers[0].converged())
         self.assertFalse(scheduler.stage_schedulers[1].converged())
-        with self.assertRaisesRegex(
-            FatalError, "stage 1: reached maximal number of iterations"
-        ):
+        with self.assertRaisesRegex(FatalError, "stage 1: reached maximal number of iterations"):
             conv, ltg, sel = scheduler.plan_next_iteration(foo_report, [])
