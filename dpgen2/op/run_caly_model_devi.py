@@ -128,9 +128,9 @@ class RunCalyModelDevi(OP):
 
                 traj_str = dump_str_dict[key]
                 model_devis = devis_dict[key]
-                assert len(traj_str) == len(
-                    model_devis
-                ), "The length of traj_str and model_devis should be same."
+                assert len(traj_str) == len(model_devis), (
+                    "The length of traj_str and model_devis should be same."
+                )
                 for idx in range(len(model_devis)):
                     traj_str[idx] = traj_str[idx] % idx
                     model_devis[idx][0] = idx

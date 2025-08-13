@@ -236,7 +236,7 @@ class RunDPTrain(OP):
                 len_init = len(init_data)
             numb_old = len_init + len(iter_data_old_exp)
             numb_new = numb_old + len(iter_data_new_exp)
-            auto_prob_str = f"prob_sys_size; 0:{numb_old}:{old_ratio}; {numb_old}:{numb_new}:{1.-old_ratio:g}"
+            auto_prob_str = f"prob_sys_size; 0:{numb_old}:{old_ratio}; {numb_old}:{numb_new}:{1.0 - old_ratio:g}"
 
         # update the input dict
         train_dict = RunDPTrain.write_data_to_input_script(

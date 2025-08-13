@@ -165,9 +165,9 @@ def print_keys_in_nice_format(
     slice_0 = [ii[0] for ii in slice_range]
     slice_1 = [ii[1] for ii in slice_range]
 
-    normal_fmt = f"%{idx_fmt_len*2+4}d"
+    normal_fmt = f"%{idx_fmt_len * 2 + 4}d"
     range_fmt = f"%d -> %d"
-    range_s_fmt = f"%{idx_fmt_len*2+4}s"
+    range_s_fmt = f"%{idx_fmt_len * 2 + 4}s"
 
     idx = 0
     ret = []

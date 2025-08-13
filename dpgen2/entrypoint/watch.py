@@ -48,10 +48,10 @@ def update_finished_steps(
     else:
         diff_keys = wf_keys
     for kk in diff_keys:
-        logging.info(f'steps {kk.ljust(50,"-")} finished')
+        logging.info(f"steps {kk.ljust(50, '-')} finished")
         if download:
             download_dpgen2_artifacts(wf, kk, prefix=prefix, chk_pnt=chk_pnt)
-            logging.info(f'steps {kk.ljust(50,"-")} downloaded')
+            logging.info(f"steps {kk.ljust(50, '-')} downloaded")
     finished_keys = wf_keys
     return finished_keys
 

@@ -33,9 +33,9 @@ class DeviManagerStd(DeviManager):
         self._data = defaultdict(list)
 
     def _add(self, name: str, deviation: np.ndarray) -> None:
-        assert isinstance(
-            deviation, np.ndarray
-        ), f"Error: deviation(type: {type(deviation)}) is not a np.ndarray"
+        assert isinstance(deviation, np.ndarray), (
+            f"Error: deviation(type: {type(deviation)}) is not a np.ndarray"
+        )
         assert len(deviation.shape) == 1, (
             f"Error: deviation(shape: {deviation.shape}) is not a "
             + f"one-dimensional array"
@@ -86,9 +86,9 @@ class DeviManagerStd(DeviManager):
                 frames.pop(name)
 
         # check if "max_devi_f" exists
-        assert (
-            len(self._data[DeviManager.MAX_DEVI_F]) == self.ntraj
-        ), f"Error: cannot find model deviation {DeviManager.MAX_DEVI_F}"
+        assert len(self._data[DeviManager.MAX_DEVI_F]) == self.ntraj, (
+            f"Error: cannot find model deviation {DeviManager.MAX_DEVI_F}"
+        )
 
         # check if the length of the arrays corresponding to the same
         # trajectory has the same number of frames

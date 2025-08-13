@@ -571,9 +571,9 @@ def workflow_concurrent_learning(
         "teacher_model_path" in explore_config
         and explore_config["teacher_model_path"] is not None
     ):
-        assert os.path.exists(
-            explore_config["teacher_model_path"]
-        ), f"No such file: {explore_config['teacher_model_path']}"
+        assert os.path.exists(explore_config["teacher_model_path"]), (
+            f"No such file: {explore_config['teacher_model_path']}"
+        )
         explore_config["teacher_model_path"] = BinaryFileInput(
             explore_config["teacher_model_path"]
         )
@@ -586,12 +586,12 @@ def workflow_concurrent_learning(
     fp_config["run"] = config["fp"]["run_config"]
     fp_config["extra_output_files"] = config["fp"]["extra_output_files"]
     if fp_style == "deepmd":
-        assert (
-            "teacher_model_path" in fp_config["run"]
-        ), f"Cannot find 'teacher_model_path' in config['fp']['run_config'] when fp_style == 'deepmd'"
-        assert os.path.exists(
-            fp_config["run"]["teacher_model_path"]
-        ), f"No such file: {fp_config['run']['teacher_model_path']}"
+        assert "teacher_model_path" in fp_config["run"], (
+            f"Cannot find 'teacher_model_path' in config['fp']['run_config'] when fp_style == 'deepmd'"
+        )
+        assert os.path.exists(fp_config["run"]["teacher_model_path"]), (
+            f"No such file: {fp_config['run']['teacher_model_path']}"
+        )
         fp_config["run"]["teacher_model_path"] = BinaryFileInput(
             fp_config["run"]["teacher_model_path"]
         )
@@ -677,13 +677,13 @@ def get_scheduler_ids(
         if get_subkey(ii.key, 1) == "scheduler":
             scheduler_ids.append(idx)
     scheduler_keys = [reuse_step[ii].key for ii in scheduler_ids]
-    assert (
-        sorted(scheduler_keys) == scheduler_keys
-    ), "The scheduler keys are not properly sorted"
+    assert sorted(scheduler_keys) == scheduler_keys, (
+        "The scheduler keys are not properly sorted"
+    )
 
     if len(scheduler_ids) == 0:
         logging.warning(
-            "No scheduler found in the workflow, " "does not do any replacement."
+            "No scheduler found in the workflow, does not do any replacement."
         )
     return scheduler_ids
 
