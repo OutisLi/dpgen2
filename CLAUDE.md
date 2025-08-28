@@ -11,13 +11,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Install with docs dependencies: `pip install -e .[docs]`
 
 ### Testing
-- Run tests: `python -m pytest tests/`
+- Run all tests: `python -m pytest tests/`
 - Run specific test file: `python -m pytest tests/test_specific_file.py`
+- Run tests with coverage: `python -m pytest tests/ --cov=dpgen2`
+- Run tests in verbose mode: `python -m pytest tests/ -v`
 
 ### Code Quality
 - Lint with ruff: `ruff check dpgen2/`
 - Format with ruff: `ruff format dpgen2/`
+- Fix linting issues: `ruff check dpgen2/ --fix`
 - Type checking: `pyright dpgen2/`
+
+### Documentation
+- Build docs: `cd docs && make html`
+- View docs locally: Open `docs/_build/html/index.html`
 
 ### Running DPGEN2
 - Submit workflow: `dpgen2 submit CONFIG.json`
@@ -108,3 +115,22 @@ Key dependencies include:
 - Workflow tests with mocked operators
 - Integration tests using fake data sets
 - Context managers for test setup in `tests/context.py`
+
+## Development Guidelines
+
+### Code Style and Formatting
+- Uses ruff for linting and formatting with line length 150 characters
+- Python 3.7+ compatibility required (target version py312 for ruff)
+- Double quotes for strings, spaces for indentation
+- Allows unused variables when underscore-prefixed
+
+### Testing Patterns
+- Mock all external dependencies in workflow tests using `tests/mocked_ops.py`
+- Use context managers from `tests/context.py` for test setup
+- Test operators independently before integrating into workflows
+- Fake datasets available in `tests/fake_data_set.py`
+
+### Configuration and Examples
+- JSON configuration files define all workflow parameters
+- Working examples available in `examples/` directory for different systems (water, AlMg, CH4, etc.)
+- Each example includes input.json and any required template files
